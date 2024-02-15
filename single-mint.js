@@ -15,16 +15,25 @@ const web3 = new Web3('https://rpc.klaos.laosfoundation.io');
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
 
-// The address of the recipient of the NFT
+// The address of the recipient of the asset
 const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 
-// The contract address of a collection in KLAOS owned by the sender
-const contractAddress = '0xffFfFfFffFFFfFfFFFffFFfE00000000000000b6';
+// The contract address of a collection in KLAOS.
+// This must either be a contract owned by the sender, or a public contract.
+// LAOS Network provides two public contracts which anybody can use to 
+// mint assets, each with a corresponding uERC-721 in either Ethereum or Polygon.
+// Their address are:
+// Ethereum: 0xffFfFFFffFfFFFfFffFFFFFe0000000000000044
+// Polygon: 0xFFfFfFffFFfFFfFFffffFffe000000000000011d
+const contractAddress = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
 
-// The IPFS address with the metadata of the asset to be minted
+// The IPFS address with the metadata of the asset to be minted.
+// You can use the ipfs-uploader.js script in these examples to 
+// create a valid IPFS address
+// NOTE: the address must start with 'ipfs://....' NOT 'https://ipfs.io/...'
 const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
 
-// The URL of the interface ABI, from GitHub
+// The URL of the interface ABI, loaded from the LAOS GitHub for convenience
 const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/ownership-chain/precompile/evolution-collection/contracts/EvolutionCollection.json?raw=true';
 
 // Generates a random integer between 0 and max
