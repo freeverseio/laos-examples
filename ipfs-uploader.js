@@ -56,7 +56,6 @@ async function main() {
       console.log('-------------');
       console.log('Metadata uploaded to IPFS');
       console.log(`IPFS address (to pass to single-mint.js): ipfs://${metadataHash}`);
-      console.log(`Example of IPFS Gateway address: https://ipfs.io/ipfs/${metadataHash}`);
       console.log('-------------\n');
     } else {
       console.log('Failed to upload metadata to IPFS');

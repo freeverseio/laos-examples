@@ -31,12 +31,13 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 //   Opensea Collection: https://opensea.io/collection/universal-polygon-collection
 //   Ethereum uERC-721 contract: 0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c
 //   KLAOS sibling collection: 0xFFfFfFffFFfFFfFFffffFffe000000000000011d
+
 const klaosCollectionAddr = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
 
 // The IPFS address with the metadata of the asset to be minted.
 // You can use the ipfs-uploader.js script in these examples to
 // create a valid IPFS address.
-// NOTE: the address must start with 'ipfs://....', not 'https://ipfs.io/...'
+// The address must start with 'ipfs://....'
 const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
 
 // The URL of the interface ABI, loaded from the LAOS GitHub for convenience
