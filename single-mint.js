@@ -35,7 +35,6 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 // need to execute either a transaction (e.g. a broadcast) so that the marketplace
 // APIs detect the new asset.
 
-
 const klaosCollectionAddr = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
 
 // The IPFS address with the metadata of the asset to be minted.
