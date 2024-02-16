@@ -21,7 +21,9 @@ To send write transactions to the LAOS network, the sender needs to own a minima
 
 ## Set up the `.env` file
 
-Follow the `example.env` file to create your own `.env` file. Make sure the private key corresponds to an account with enough funds.
+Rename the `example.env` file to `.env`, and fill in the three fields:
+* The private key field must start with `0x...`, and the corresponding account must have acquired tokens from the faucet. This field is required.
+* The examples use [Pinata](https://www.pinata.cloud/) to upload and store data in IPFS. To use the `ipfs-uploader.js` example, either use your Pinata API key or create a free Pinata account to get one. Paste the key and secret in the fields in the .env file. If you are minting using IPFS addresses from different source, you need not fill in these fields.
 
 ## Run the scripts
 
@@ -32,3 +34,23 @@ Run the scripts via:
 ```bash
 node script_name.js
 ```
+
+## Minting an asset on Ethereum or Polygon
+
+The fastest way to bridgelessly mint an asset on Ethereum or Polygon (without paying any ETH or MATIC) is to use existing collections that have Public Minting enabled. 
+
+The steps are as follows:
+
+1. Place an image that you would like to be associated with the asset in the `./imgs` folder.
+2. Edit the `main()` function of the `ipfs-uploader.js` script to use the path to the image, as well as the title, description, and associated metadata of the asset. Run the script.
+3. Paste the resulting `ipfs://...` output from `ipfs-uploader.js` into the `tokenURI` variable of the `single-mint.js` script.
+4. Ensure that the `klaosCollectionAddr` and `toAddress` variables are set to your requirements, as explained in the script comments. Run the script.
+5. The output of the script is a `tokenID`.
+
+If you used the suggested public collections in the example, the minted assets can be viewed at:
+
+* For assets minted in the **Ethereum** public contract:
+`https://apps.klaos.io/asset/1/0x56d77B72C8A7322D2F63bBd17EacB5AeB8671925/<tokenID>`
+
+* For assets minted in the **Polygon** public contract, the asset can be viewed at:
+`https://apps.klaos.io/asset/137/0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c/<tokenID>`
