@@ -31,6 +31,10 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 //   Opensea Collection: https://opensea.io/collection/universal-polygon-collection
 //   Ethereum uERC-721 contract: 0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c
 //   KLAOS sibling collection: 0xFFfFfFffFFfFFfFFffffFffe000000000000011d
+// NOTE: for minted assets to appear in Opensea and other marketplaces, you will
+// need to execute either a transaction (e.g. a broadcast) so that the marketplace
+// APIs detect the new asset.
+
 
 const klaosCollectionAddr = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
 
