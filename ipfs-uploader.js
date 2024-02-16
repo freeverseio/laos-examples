@@ -32,8 +32,8 @@ async function main() {
   const imageHash = await uploadToIPFS(imagePath); // Upload image
 
   if (imageHash) {
-    console.log('\n-------------')
-    console.log(`Image uploaded to IPFS: https://ipfs.io/ipfs/${imageHash}`);
+    console.log('\n-------------');
+    console.log(`Image uploaded to IPFS: ipfs://${imageHash}`);
 
     // Prepare metadata
     const metadata = {
@@ -53,11 +53,11 @@ async function main() {
     // Upload metadata
     const metadataHash = await uploadToIPFS(metadataPath);
     if (metadataHash) {
-      console.log('-------------')
-      console.log(`Metadata uploaded to IPFS`);
-      console.log(`Web address: https://ipfs.io/ipfs/${metadataHash}`);
+      console.log('-------------');
+      console.log('Metadata uploaded to IPFS');
       console.log(`IPFS address (to pass to single-mint.js): ipfs://${metadataHash}`);
-      console.log('-------------\n')
+      console.log(`Example of IPFS Gateway address: https://ipfs.io/ipfs/${metadataHash}`);
+      console.log('-------------\n');
     } else {
       console.log('Failed to upload metadata to IPFS');
     }
