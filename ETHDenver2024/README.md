@@ -33,14 +33,16 @@ Check this simple [on-boarding site for DAME](https://apps.klaos.io/extend) for 
 
 ## Q&A
 
-* **Is LAOS EVM-compatible?**  Yes. 100%. You can deploy your smart contracts, use your standard web3 libraries, wallets, etc.
+* **Is LAOS EVM-compatible?**  Yes. 100%. You can deploy your smart contracts, use your standard web3 libraries, wallets, etc. [Here](https://app.gitbook.com/o/Che3PkDSFGGaCerv2hS8/s/HUKiUao8hGUgferucKd9/introduction/laos-and-k-laos) are some public endpoints and the rest of EVM data.
 
 * **Is this similar to Inscriptions?** Not really. Bridgeless Minting uses two consensus systems, and does not require using TX's calldata. Check [this post](https://medium.com/laosnetwork/introducing-universals-assets-minted-via-bridgeless-patterns-in-any-blockchain-6265e2313e5a) to dig further.  
 
 
 ## Any ideas for a building DApps on LAOS Network?
 
-- 
+* **LAOS for Bitcoin Ordinals/Inscriptions**. LAOS is already serving EVM chains like Ethereum, Polygon, etc. to offload their minting pressure. Similar patterns can be implemented for scaling Bitcoin Inscriptions, using LAOS as its sibling consensus system.
+
+* **LAOS' DAME for Veracity Claims**. In the paradigm we are entering, where everything can be fake, use DAME to allow anyone to permissionlessly associate  metadata to any IPFS address. For instance, consider a photographer who uploads photos documenting a conflict to IPFS. The BBC and any other interested party can verify the authenticity of these photos. Similarly, the credibility of the verifiers, such as the BBC, influences whether viewers trust the validity of the photos, depending on the level of reputation the viewers attribute to the claimers.
 
 
 ## How can I try this out as a user?
@@ -77,6 +79,6 @@ LAOS is fully decentralized, permissionless and open-source. The following refer
 # Disclaimer
 
 LAOS is targeting late early Q2'2024 to bid for a Parachain slot on Polkadot. 
-Presently, LAOS is accessible both via its canary Parachain in Kusama, named K-LAOS, which stands for Kusama LAOS.
+Presently, LAOS is accessible via its canary Parachain in Kusama, named K-LAOS, which stands for Kusama LAOS.
 Please read the [disclaimer about K-LAOS](https://www.laosfoundation.io/disclaimer-klaos) that stresses the fact
 that K-LAOS is used purely as a testing network.
