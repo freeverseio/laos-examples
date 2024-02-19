@@ -3,7 +3,7 @@
 
 ## Mint limitless assets on Ethereum, without paying ETH
 
-LAOS is a Layer 1 that connects without bridges to Ethereum, Polygon, their respective L2s, and any other EVM-compatible chains. It allows for the minting of unlimited assets on these chains without incurring native gas fees, eliminating the need for bridges or wrapped currency, while still being fully compatible with their DApps and marketplaces.
+LAOS is a Layer 1 that connects without bridges to Ethereum, Polygon, their respective L2s, and any other EVM-compatible chains. It allows for the minting of large number of assets on these chains without incurring native gas fees, eliminating the need for bridges or wrapped currency, while still being fully compatible with their DApps and marketplaces.
 
 ## Why should I BUIDL with LAOS?
 
