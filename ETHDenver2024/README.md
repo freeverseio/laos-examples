@@ -19,6 +19,11 @@ LAOS' extension of this pattern links an ERC721 contract deployed on Ethereum wi
 
 No bridges are required.
 
+## Is this similar to Inscriptions?
+
+Not really. Bridgeless Minting uses two consensus systems, and does not require using TX's calldata. Check [this post](https://medium.com/laosnetwork/introducing-universals-assets-minted-via-bridgeless-patterns-in-any-blockchain-6265e2313e5a) to dig further.  
+
+
 ## I don’t believe you. Show me the proof.
 
 Here are the Opensea links to the [Ethereum](https://opensea.io/collection/eth-laos-bridgeless-minting) and [Polygon](https://opensea.io/collection/universal-polygon-collection) public collections of assets minted via LAOS' bridgeless pattern. No ETH or MATIC were used to mint these assets.
