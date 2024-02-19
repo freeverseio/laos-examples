@@ -11,7 +11,7 @@ LAOS is a Layer 1 that connects without bridges to Ethereum, Polygon, their resp
 
 - No congestion - you won’t congest Ethereum by minting large numbers of assets, your DApp can mint thousands of assets every minute.
 
-## No ETH for minting in Ethereum? That sounds like magic and/or a scam. How does it work? Does it use bridges?
+## No ETH for minting in Ethereum? That sounds like magic and/or a scam. How does it work? Does it use bridges?
 
 LAOS is a parachain in the Polkadot/Kusama ecosystem, and is secured by Polkadot’s well-regarded and battle-tested security.
 
