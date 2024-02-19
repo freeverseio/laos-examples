@@ -78,7 +78,7 @@ LAOS is fully decentralized, permissionless and open-source. The following refer
 
 # Disclaimer
 
-LAOS is targeting late early Q2'2024 to bid for a Parachain slot on Polkadot. 
+LAOS is targeting early Q2'2024 to bid for a Parachain slot on Polkadot. 
 Presently, LAOS is accessible via its canary Parachain in Kusama, named K-LAOS, which stands for Kusama LAOS.
 Please read the [disclaimer about K-LAOS](https://www.laosfoundation.io/disclaimer-klaos) that stresses the fact
 that K-LAOS is used purely as a testing network.
