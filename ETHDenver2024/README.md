@@ -7,9 +7,7 @@ LAOS is a Layer 1 that connects without bridges to Ethereum, Polygon, their resp
 
 ## Why should I BUIDL with LAOS?
 
-- You will save money - you won’t pay any ETH for minting assets on Ethereum.
-
-- No congestion - you won’t congest Ethereum by minting large numbers of assets, your DApp can mint thousands of assets every minute.
+You can build applications on Ethereum or Polygon which require truly massive minting: mints won't require using ETH/MATIC, and you won't collapse those networks.
 
 ## No ETH for minting in Ethereum? That sounds like magic and/or a scam. How does it work? Does it use bridges?
 
@@ -21,9 +19,10 @@ LAOS' extension of this pattern links an ERC721 contract deployed on Ethereum wi
 
 No bridges are required.
 
-## I don’t believe you. Show me the proof!
+## I don’t believe you. Show me the proof.
 
-Here are the Opensea links to the [Ethereum](https://opensea.io/collection/eth-laos-bridgeless-minting) and [Polygon](https://opensea.io/collection/universal-polygon-collection) public collections of assets minted via LAOS' bridgeless pattern. No ETH or MATIC were used to mint these assets!
+Here are the Opensea links to the [Ethereum](https://opensea.io/collection/eth-laos-bridgeless-minting) and [Polygon](https://opensea.io/collection/universal-polygon-collection) public collections of assets minted via LAOS' bridgeless pattern. No ETH or MATIC were used to mint these assets.
+
 
 ## Ideas for buidling DApps on LAOS Network
 
@@ -62,3 +61,11 @@ LAOS is fully decentralized, permissionless and open-source. The following refer
 - [Discord](https://discord.gg/gZcxsJcdPy): Join our Discord server to ask questions and participate.
 
 - [Twitter/X](https://twitter.com/laosnetwork): Follow us on Twitter to keep up to date.
+
+
+# Disclaimer
+
+LAOS is targeting late early Q2'2024 to bid for a Parachain slot on Polkadot. 
+Presently, LAOS is accessible both via its canary Parachain in Kusama, named K-LAOS, which stands for Kusama LAOS.
+Please read the [disclaimer about K-LAOS](https://www.laosfoundation.io/disclaimer-klaos) that stresses the fact
+that K-LAOS is used purely as a testing network.
