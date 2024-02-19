@@ -9,6 +9,7 @@ LAOS is a Layer 1 that connects without bridges to Ethereum, Polygon, their resp
 
 You can build applications on Ethereum or Polygon which require truly massive minting: mints won't require using ETH/MATIC, and you won't collapse those networks.
 
+
 ## No ETH for minting in Ethereum? That sounds like magic and/or a scam. How does it work? Does it use bridges?
 
 LAOS is a parachain in the Polkadot/Kusama ecosystem, and is secured by Polkadot’s well-regarded and battle-tested security.
@@ -19,23 +20,28 @@ LAOS' extension of this pattern links an ERC721 contract deployed on Ethereum wi
 
 No bridges are required.
 
-## Is this similar to Inscriptions?
-
-Not really. Bridgeless Minting uses two consensus systems, and does not require using TX's calldata. Check [this post](https://medium.com/laosnetwork/introducing-universals-assets-minted-via-bridgeless-patterns-in-any-blockchain-6265e2313e5a) to dig further.  
-
-
 ## I don’t believe you. Show me the proof.
 
 Here are the Opensea links to the [Ethereum](https://opensea.io/collection/eth-laos-bridgeless-minting) and [Polygon](https://opensea.io/collection/universal-polygon-collection) public collections of assets minted via LAOS' bridgeless pattern. No ETH or MATIC were used to mint these assets.
 
 
-## Ideas for buidling DApps on LAOS Network
+## What else can I do in LAOS?
 
-- one
+LAOS can also be used **the reverse way**. With Bridgeless Minting (described above), other consensus systems point to LAOS. **The reverse way** is about using LAOS to point to other consensus systems. For example, one of LAOS' protocol-level features is called Decentralized Asset Metadata Extender (DAME). It allows anyone, permissionlessly, to extend the metadata associated with any NFT, in any chain, irrespective of who created it, or who owns it.
 
-- two
+Check this simple [on-boarding site for DAME](https://apps.klaos.io/extend) for more info, and to try your first asset extensions.
 
-- three
+## Q&A
+
+* **Is LAOS EVM-compatible?**  Yes. 100%. You can deploy your smart contracts, use your standard web3 libraries, wallets, etc.
+
+* **Is this similar to Inscriptions?** Not really. Bridgeless Minting uses two consensus systems, and does not require using TX's calldata. Check [this post](https://medium.com/laosnetwork/introducing-universals-assets-minted-via-bridgeless-patterns-in-any-blockchain-6265e2313e5a) to dig further.  
+
+
+## Any ideas for a building DApps on LAOS Network?
+
+- 
+
 
 ## How can I try this out as a user?
 
