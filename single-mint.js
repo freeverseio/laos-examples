@@ -3,7 +3,17 @@
   hence filling the corresponding slot created in the
   ERC721 deployed in another chain.
   The sender must be the owner of the collection in LAOS.
-*/
+
+  Bridgelessly minted assets are ready to be traded on chain, for example,
+  using Etherscan/Polygonscan, by importing them to Metamask and using "Send",
+  or by using your favorite web3 library connected to Ethereum/Polygon, etc.
+  To appear in Opensea & marketplaces that use event-based indexers, and which
+  still don't use the uNode, you will either need to 'Send' it first, or
+  execute a broadcast transaction.
+
+  The front end at https://apps.klaos.io/asset/<networkId>/<uERC721 address>/<tokenID>
+  can be used to facilitate importing to Metamask and broadcasting.
+  */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const { Web3 } = require('web3');
@@ -31,10 +41,6 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 //   Opensea Collection: https://opensea.io/collection/universal-polygon-collection
 //   Ethereum uERC-721 contract: 0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c
 //   KLAOS sibling collection: 0xFFfFfFffFFfFFfFFffffFffe000000000000011d
-// NOTE: for minted assets to appear in Opensea and other marketplaces, you will
-// need to execute either a transaction (e.g. a broadcast) so that the marketplace
-// APIs detect the new asset.
-
 
 const klaosCollectionAddr = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
 
