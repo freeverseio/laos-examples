@@ -20,7 +20,7 @@ const { Web3 } = require('web3');
 const axios = require('axios');
 
 // Initialize Web3 instance with LAOS node provider
-const web3 = new Web3('https://rpc.klaos.laosfoundation.io');
+const web3 = new Web3('https://rpc.klaosnova.laosfoundation.io');
 
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
@@ -34,12 +34,12 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 // As examples, the following two uERC-721 contracts point to sibling KLAOS
 // collections that currently have Public Minting enabled:
 // Ethereum:
-//   Opensea Collection: https://opensea.io/collection/eth-laos-bridgeless-minting
-//   Ethereum uERC-721 contract: 0x56d77b72c8a7322d2f63bbd17eacb5aeb8671925
+//   Opensea Collection: https://opensea.io/collection/laos-bridgeless-minting-on-eth
+//   Ethereum uERC-721 contract: 0x501E7DeadfDcAE6654B0233632fad0D263d1D823
 //   KLAOS sibling collection: 0xffFfFFFffFfFFFfFffFFFFFe0000000000000044
 // Polygon:
-//   Opensea Collection: https://opensea.io/collection/universal-polygon-collection
-//   Ethereum uERC-721 contract: 0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c
+//   Opensea Collection: https://opensea.io/collection/laos-bridgeless-minting-on-polygon
+//   Ethereum uERC-721 contract: 0x167ef072F21D5ec07139810B32970921d15a3dE5
 //   KLAOS sibling collection: 0xFFfFfFffFFfFFfFFffffFffe000000000000011d
 
 const klaosCollectionAddr = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
@@ -51,7 +51,7 @@ const klaosCollectionAddr = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
 const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
 
 // The URL of the interface ABI, loaded from the LAOS GitHub for convenience
-const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/ownership-chain/precompile/evolution-collection/contracts/EvolutionCollection.json?raw=true';
+const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/precompile/evolution-collection/contracts/EvolutionCollection.json?raw=true';
 
 // Generates a random integer between 0 and max
 function getRandomBigInt(max) {

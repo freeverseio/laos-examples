@@ -8,22 +8,22 @@ const { Web3 } = require('web3');
 const axios = require('axios');
 
 // Initialize Web3 instance with LAOS node provider
-const web3 = new Web3('https://rpc.klaos.laosfoundation.io');
+const web3 = new Web3('https://rpc.klaosnova.laosfoundation.io');
 
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
 
 // The contract address of a collection in KLAOS owned by the sender
-const contractAddress = '0xffFfFfFffFFFfFfFFFffFFfE00000000000000b6';
+const contractAddress = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
 
 // The IPFS address with the updated metadata of the asset
 const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
 
 // The tokenID of the token to be updated
-const tokenID = '98218211503884169464010162556474302374849222871777179214008520108470801235178';
+const tokenID = '95036572091030625871178744150205894150468242871644166553834518306430541855978';
 
 // The URL of the interface ABI, from GitHub
-const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/ownership-chain/precompile/evolution-collection/contracts/EvolutionCollection.json?raw=true';
+const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/precompile/evolution-collection/contracts/EvolutionCollection.json?raw=true';
 
 async function main() {
   try {

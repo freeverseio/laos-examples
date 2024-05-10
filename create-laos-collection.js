@@ -8,7 +8,7 @@ const { Web3 } = require('web3');
 const axios = require('axios');
 
 // Initialize Web3 instance with LAOS node provider
-const web3 = new Web3('https://rpc.klaos.laosfoundation.io');
+const web3 = new Web3('https://rpc.klaosnova.laosfoundation.io');
 
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
@@ -17,7 +17,7 @@ const privateKey = process.env.PRIVATE_KEY;
 const contractAddress = '0x0000000000000000000000000000000000000403';
 
 // The URL of the interface ABI, from GitHub
-const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/ownership-chain/precompile/evolution-collection-factory/contracts/EvolutionCollectionFactory.json?raw=true';
+const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/precompile/evolution-collection-factory/contracts/EvolutionCollectionFactory.json?raw=true';
 
 async function main() {
   try {
