@@ -15,7 +15,7 @@ const web3 = new Web3('https://rpc.klaosnova.laosfoundation.io');
 const privateKey = process.env.PRIVATE_KEY;
 
 // The universal location of the asset to be extended (in Ethereum, because of 7:1)
-const assetUniversalLocation = 'uloc://GlobalConsensus(7:1)/AccountKey20(0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d)/GeneralKey(3087)';
+const assetUniversalLocation = 'uloc://GlobalConsensus(7:1)/AccountKey20(0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d)/GeneralKey(3099)';
 
 // The ipfs address containing the newly added metadata
 const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
