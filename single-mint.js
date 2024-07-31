@@ -20,7 +20,7 @@ const { Web3 } = require('web3');
 const axios = require('axios');
 
 // Initialize Web3 instance with LAOS node provider
-const web3 = new Web3('https://rpc.klaosnova.laosfoundation.io');
+const web3 = new Web3('https://rpc.laossigma.laosfoundation.io');
 
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
