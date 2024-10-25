@@ -23,7 +23,7 @@ const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
 const tokenID = '98218211503884169464010162556474302374849222871777179214008520108470801235178';
 
 // The URL of the interface ABI, from GitHub
-const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/precompile/evolution-collection/contracts/EvolutionCollection.json?raw=true';
+const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/pallets/laos-evolution/src/precompiles/evolution_collection/contracts/EvolutionCollection.json?raw=true';
 
 async function main() {
   try {

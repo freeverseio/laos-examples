@@ -24,7 +24,7 @@ const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
 const contractAddress = '0x0000000000000000000000000000000000000405';
 
 // The GitHub URL containing the interface to the contract:
-const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/precompile/asset-metadata-extender/contracts/AssetMetadataExtender.json?raw=true';
+const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/pallets/asset-metadata-extender/src/precompiles/asset_metadata_extender/contracts/AssetMetadataExtender.json?raw=true';
 
 async function main() {
   try {
