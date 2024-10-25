@@ -14,13 +14,13 @@ const web3 = new Web3('https://rpc.laossigma.laosfoundation.io');
 const privateKey = process.env.PRIVATE_KEY;
 
 // The contract address of a collection in KLAOS owned by the sender
-const contractAddress = '0xfFfFffFFfFfFFFFFFffFfffE0000000000000113';
+const contractAddress = '0xffFfFfFffFFFfFfFFFffFFfE00000000000000b6';
 
 // The IPFS address with the updated metadata of the asset
-const tokenURI = 'ipfs://QmWYkoWJg9p3ndMBV91TviaHGNywoSnztUHWwJot7fuz6Y';
+const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
 
 // The tokenID of the token to be updated
-const tokenID = '54227173012980701237119388165985623609204732016578329839312404345222829931754';
+const tokenID = '98218211503884169464010162556474302374849222871777179214008520108470801235178';
 
 // The URL of the interface ABI, from GitHub
 const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/pallets/laos-evolution/src/precompiles/evolution_collection/contracts/EvolutionCollection.json?raw=true';
