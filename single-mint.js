@@ -42,13 +42,13 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 //   Ethereum uERC-721 contract: 0x167ef072F21D5ec07139810B32970921d15a3dE5
 //   KLAOS sibling collection: 0xFFfFfFffFFfFFfFFffffFffe000000000000011d
 
-const klaosCollectionAddr = '0xfFfFffFFfFfFFFFFFffFfffE0000000000000113';
+const laosCollectionAddr = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
 
 // The IPFS address with the metadata of the asset to be minted.
 // You can use the ipfs-uploader.js script in these examples to
 // create a valid IPFS address.
 // The address must start with 'ipfs://....'
-const tokenURI = 'ipfs://QmVQggoysM3v6KWbugKsNKung23z9MbQaH2kpvaLWi2Mg5';
+const tokenURI = 'ipfs://QmPuwGA4tHHdog5R4w1TUGjVGf2zd1v6fXJZhiXgJ8a1Tj';
 
 // The URL of the interface ABI, loaded from the LAOS GitHub for convenience
 const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/pallets/laos-evolution/src/precompiles/evolution_collection/contracts/EvolutionCollection.json?raw=true';
@@ -65,7 +65,7 @@ async function main() {
     const contractABI = response.data;
 
     // Instantiating the contract
-    const contract = new web3.eth.Contract(contractABI, klaosCollectionAddr);
+    const contract = new web3.eth.Contract(contractABI, laosCollectionAddr);
 
     // Generate a random slot number
     const slot = getRandomBigInt(2n ** 96n - 1n);
@@ -75,7 +75,7 @@ async function main() {
     const fromAddress = web3.eth.accounts.privateKeyToAccount(privateKey).address;
     const transaction = {
       from: fromAddress,
-      to: klaosCollectionAddr,
+      to: laosCollectionAddr,
       data: encodedABI,
       gas: 35000,
       gasPrice: web3.utils.toWei('0.5', 'gwei'), // Set the desired gas price
@@ -93,7 +93,7 @@ async function main() {
     // Retrieve the token ID from the transaction receipt
     const mintEventABI = contractABI.find((abi) => abi.name === 'MintedWithExternalURI' && abi.type === 'event');
     const mintEvent = receipt.logs.find(
-      (log) => log.address.toLowerCase() === klaosCollectionAddr.toLowerCase(),
+      (log) => log.address.toLowerCase() === laosCollectionAddr.toLowerCase(),
     );
     if (mintEvent && mintEventABI) {
       const decodedLog = web3.eth.abi.decodeLog(
