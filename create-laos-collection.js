@@ -17,7 +17,7 @@ const privateKey = process.env.PRIVATE_KEY;
 const contractAddress = '0x0000000000000000000000000000000000000403';
 
 // The URL of the interface ABI, from GitHub
-const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/precompile/evolution-collection-factory/contracts/EvolutionCollectionFactory.json?raw=true';
+const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/pallets/laos-evolution/src/precompiles/evolution_collection_factory/contracts/EvolutionCollectionFactory.json?raw=true';
 
 async function main() {
   try {
