@@ -20,10 +20,12 @@ const axios = require('axios');
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
 
-// This example will use Polygon PoS:
-//   Opensea Collection: https://opensea.io/collection/laos-bridgeless-minting-on-polygon-1
-//   Polygon uERC-721 contract: 0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF
-//   LAOS Sigma sibling collection: 0xfFFfFffffFffFFfFFffffffe000000000000000D
+/*
+This example will use the public collection on Polygon PoS:
+ - Opensea Collection: https://opensea.io/collection/laos-bridgeless-minting-on-polygon-1
+ - Polygon uERC-721 contract: 0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF
+ - LAOS Sigma sibling collection: 0xfFFfFffffFffFFfFFffffffe000000000000000D
+*/
 
 // Initialize Web3 instance connected to a node provider of an ownership chain (e.g. Polygon PoS)
 const web3 = new Web3('https://polygon.llamarpc.com');
