@@ -44,7 +44,7 @@ The steps are as follows:
 1. Place an image that you would like to be associated with the asset in the `./imgs` folder.
 2. Edit the `main()` function of the `ipfs-uploader.js` script to use the path to the image, as well as the title, description, and associated metadata of the asset. Run the script.
 3. Paste the resulting `ipfs://...` output from `ipfs-uploader.js` into the `tokenURI` variable of the `single-mint.js` script.
-4. Ensure that the `klaosCollectionAddr` and `toAddress` variables are set to your requirements, as explained in the script comments. Run the script.
+4. Ensure that the `laosCollectionAddr` and `toAddress` variables are set to your requirements, as explained in the script comments. Run the script.
 5. The output of the script is a `tokenID`.
 
 If you used the suggested public collections in the example, the minted assets can be viewed at:
@@ -52,5 +52,5 @@ If you used the suggested public collections in the example, the minted assets c
 * For assets minted in the [Ethereum public collection](https://testnet.apps.laosnetwork.io/collection/1/0xee5B64092Fb09a219baa4D0DF909ED730A85c67e):
 `https://testnet.apps.laosnetwork.io/asset/1/0xee5b64092fb09a219baa4d0df909ed730a85c67e/<tokenID>`
 
-* For assets minted in the [Polygon public collections](https://testnet.apps.laosnetwork.io/collection/137/0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF):
+* For assets minted in the [Polygon public collection](https://testnet.apps.laosnetwork.io/collection/137/0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF):
 `https://testnet.apps.laosnetwork.io/collection/137/0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c/<tokenID>`

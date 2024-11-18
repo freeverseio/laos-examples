@@ -11,7 +11,7 @@
   still don't use the uNode, you will either need to 'Send' it first, or
   execute a broadcast transaction.
 
-  The front end at https://apps.klaos.io/asset/<networkId>/<uERC721 address>/<tokenID>
+  The front end at https://testnet.apps.laosnetwork.io/asset/<networkId>/<uERC721_address>/<tokenID>
   can be used to facilitate importing to Metamask and broadcasting.
   */
 /* eslint-disable no-underscore-dangle */
@@ -28,10 +28,10 @@ const privateKey = process.env.PRIVATE_KEY;
 // The address of the recipient of the asset
 const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 
-// The contract address of a collection in KLAOS.
+// The contract address of a collection in LAOS Sigma testnet.
 // This must either be a collection owned by the sender,
 // or a collection with Public Minting enabled.
-// As examples, the following two uERC-721 contracts point to sibling KLAOS
+// As examples, the following two uERC-721 contracts point to sibling LAOS Sigma
 // collections that currently have Public Minting enabled:
 // Ethereum:
 //   Ethereum uERC-721 contract: 0xee5B64092Fb09a219baa4D0DF909ED730A85c67e
