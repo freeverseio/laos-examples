@@ -13,7 +13,7 @@ const web3 = new Web3('https://rpc.laossigma.laosfoundation.io');
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
 
-// The contract address of a collection in KLAOS owned by the sender
+// The contract address of a collection in LAOS Sigma owned by the sender
 const contractAddress = '0xffFfFfFffFFFfFfFFFffFFfE00000000000000b6';
 
 // The IPFS address with the updated metadata of the asset
