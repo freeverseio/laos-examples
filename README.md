@@ -49,8 +49,8 @@ The steps are as follows:
 
 If you used the suggested public collections in the example, the minted assets can be viewed at:
 
-* For assets minted in the **Ethereum** public contract:
-`https://apps.klaos.io/asset/1/0x56d77B72C8A7322D2F63bBd17EacB5AeB8671925/<tokenID>`
+* For assets minted in the [Ethereum public collection](https://testnet.apps.laosnetwork.io/collection/1/0xee5B64092Fb09a219baa4D0DF909ED730A85c67e):
+`https://testnet.apps.laosnetwork.io/asset/1/0xee5b64092fb09a219baa4d0df909ed730a85c67e/<tokenID>`
 
-* For assets minted in the **Polygon** public contract, the asset can be viewed at:
-`https://apps.klaos.io/asset/137/0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c/<tokenID>`
+* For assets minted in the [Polygon public collections](https://testnet.apps.laosnetwork.io/collection/137/0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF):
+`https://testnet.apps.laosnetwork.io/collection/137/0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c/<tokenID>`

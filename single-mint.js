@@ -34,15 +34,14 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 // As examples, the following two uERC-721 contracts point to sibling KLAOS
 // collections that currently have Public Minting enabled:
 // Ethereum:
-//   Opensea Collection: https://opensea.io/collection/laos-bridgeless-minting-on-eth
-//   Ethereum uERC-721 contract: 0x501E7DeadfDcAE6654B0233632fad0D263d1D823
-//   KLAOS sibling collection: 0xffFfFFFffFfFFFfFffFFFFFe0000000000000044
+//   Ethereum uERC-721 contract: 0xee5B64092Fb09a219baa4D0DF909ED730A85c67e
+//   LAOS Sigma sibling collection: 0xFFfFfFFFfFFFfFfFfffFfffe000000000000000e
 // Polygon:
-//   Opensea Collection: https://opensea.io/collection/laos-bridgeless-minting-on-polygon
-//   Ethereum uERC-721 contract: 0x167ef072F21D5ec07139810B32970921d15a3dE5
-//   KLAOS sibling collection: 0xFFfFfFffFFfFFfFFffffFffe000000000000011d
+//   Opensea Collection: https://opensea.io/collection/laos-bridgeless-minting-on-polygon-1
+//   Polygon uERC-721 contract: 0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF
+//   LAOS Sigma sibling collection: 0xfFFfFffffFffFFfFFffffffe000000000000000D
 
-const laosCollectionAddr = '0xffFfFFFffFfFFFfFffFFFFFe0000000000000044';
+const laosCollectionAddr = '0xfFFfFffffFffFFfFFffffffe000000000000000D';
 
 // The IPFS address with the metadata of the asset to be minted.
 // You can use the ipfs-uploader.js script in these examples to
