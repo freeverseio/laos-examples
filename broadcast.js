@@ -30,7 +30,7 @@ This example will use the public collection on Polygon PoS:
 // Initialize Web3 instance connected to a node provider of an ownership chain (e.g. Polygon PoS)
 const web3 = new Web3('https://polygon.llamarpc.com');
 
-// The contract address on Polygon and the tokenId of the asset to be broadcasted 
+// The contract address on Polygon and the tokenId of the asset to be broadcasted
 const uERC721Address = '0x0cf5fc5b64d60c13894328b16042a4d8f8398ebf';
 const tokenId = '51102759750158299704424093372560085818180704509134110948726375946946599308584';
 
