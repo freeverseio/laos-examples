@@ -29,7 +29,7 @@ Here are the Opensea links to the [Ethereum](https://opensea.io/collection/eth-l
 
 LAOS can also be used **the reverse way**. With Bridgeless Minting (described above), other consensus systems point to LAOS. **The reverse way** is about using LAOS to point to other consensus systems. For example, one of LAOS' protocol-level features is called Decentralized Asset Metadata Extender (DAME). It allows anyone, permissionlessly, to extend the metadata associated with any NFT, in any chain, irrespective of who created it, or who owns it.
 
-Check this simple [on-boarding site for DAME](https://apps.klaos.io/extend) for more info, and to try your first asset extensions.
+Check this simple [on-boarding site for DAME](https://testnet.apps.laosnetwork.io/extend) for more info, and to try your first asset extensions.
 
 ## Q&A
 
@@ -47,13 +47,13 @@ Check this simple [on-boarding site for DAME](https://apps.klaos.io/extend) for 
 
 ## How can I try this out as a user?
 
-This is a user facing basic [on-boarding front-end](https://apps.klaos.io/). Within it, you'll find the:
+This is a user facing basic [on-boarding front-end](https://testnet.apps.laosnetwork.io). Within it, you'll find the:
 
-- [Faucet](https://apps.klaos.io/faucet): Grab some test tokens from the Faucet;
+- [Faucet](https://testnet.apps.laosnetwork.io/faucet): Grab some test tokens from the Faucet;
 
-- [Bridgeless Minter App](https://apps.klaos.io/): No-code minting of assets on Ethereum and Polygon, without paying ETH or MATIC;
+- [Bridgeless Minter App](https://testnet.apps.laosnetwork.io/mint/create): No-code minting of assets on Ethereum and Polygon, without paying ETH or MATIC;
 
-- [Asset Metadata Extension](https://apps.klaos.io/extend): Permissionlesly extend the metadata of any asset.
+- [Asset Metadata Extension](https://testnet.apps.laosnetwork.io/extend): Permissionlesly extend the metadata of any asset.
 
 ## How can I develop on LAOS?
 
@@ -74,11 +74,3 @@ LAOS is fully decentralized, permissionless and open-source. The following refer
 - [Discord](https://discord.gg/gZcxsJcdPy): Join our Discord server to ask questions and participate.
 
 - [Twitter/X](https://twitter.com/laosnetwork): Follow us on Twitter to keep up to date.
-
-
-# Disclaimer
-
-LAOS is targeting early Q2'2024 to bid for a Parachain slot on Polkadot. 
-Presently, LAOS is accessible via its canary Parachain in Kusama, named K-LAOS, which stands for Kusama LAOS.
-Please read the [disclaimer about K-LAOS](https://www.laosfoundation.io/disclaimer-klaos) that stresses the fact
-that K-LAOS is used purely as a testing network.

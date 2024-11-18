@@ -17,7 +17,7 @@ npm ci
 
 ## Obtain tokens from the faucet
 
-To send write transactions to the LAOS network, the sender needs to own a minimal amount of funds. Please use [this faucet](https://apps.klaos.io/faucet) if needed.
+To send write transactions to the LAOS network, the sender needs to own a minimal amount of funds. Please use [this faucet](https://testnet.apps.laosnetwork.io/faucet) if needed.
 
 ## Set up the `.env` file
 
