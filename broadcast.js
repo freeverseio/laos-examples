@@ -81,6 +81,7 @@ async function main() {
         transferEvent.topics.slice(1),
       );
       console.log(`Broadcasted Token ID: ${decodedLog.tokenId}`);
+      console.log(`If you used the Polygon example, the asset should be tradeable on Opensea at: https://opensea.io/assets/matic/${uERC721Address}/${tokenId}`);
     } else {
       console.log('Broadcast event log not found.');
     }
