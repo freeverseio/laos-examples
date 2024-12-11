@@ -15,7 +15,7 @@ const web3 = new Web3('https://rpc.laossigma.laosfoundation.io');
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
 
-// The contract address exposing collection creation
+// The precompiled contract address exposing collection creation
 const contractAddress = '0x0000000000000000000000000000000000000403';
 
 // The URL of the interface ABI, from GitHub
