@@ -34,12 +34,19 @@ async function main() {
       web3.eth.accounts.privateKeyToAccount(privateKey).address,
     ).encodeABI();
     const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+
+    const gasEstimate = await web3.eth.estimateGas({
+      to: contractAddress,
+      data: encodedABI,
+      from: account.address,
+    });
+
     const transaction = {
       to: contractAddress,
       data: encodedABI,
-      gas: 45000,
-      gasPrice,
       nonce: await web3.eth.getTransactionCount(account.address),
+      gas: gasEstimate,
+      gasPrice,
     };
 
     // Sign and send the transaction
@@ -47,7 +54,7 @@ async function main() {
     console.log('Transaction sent. Waiting for confirmation...');
 
     const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-    console.log('Transaction confirmed. Collection created in block number:', receipt.blockNumber);
+    console.log('Transaction confirmed. Collection created in block number:', Number(receipt.blockNumber));
 
     // Retrieve the contract address from the transaction receipt
     const newCollectionEventABI = contractABI.find((abi) => abi.name === 'NewCollection' && abi.type === 'event');
