@@ -2,7 +2,7 @@
   Mints a single asset in the LAOS sibling collection,
   hence filling the corresponding slot created in the
   ERC721 deployed in another chain.
-  The sender must be the owner of the collection in LAOS.
+  The sender must be the owner of the collection on LAOS.
 
   Bridgelessly minted assets are ready to be traded on chain, for example,
   using Etherscan/Polygonscan, by importing them to Metamask and using "Send",
@@ -19,14 +19,16 @@ require('dotenv').config();
 const { Web3 } = require('web3');
 const axios = require('axios');
 
-// Initialize Web3 instance with LAOS node provider
+// Initialize Web3 instance with LAOS node provider. Public nodes:
+// * LAOS Mainnet: https://rpc.laos.laosfoundation.io
+// * LAOS Testnet: https://rpc.laossigma.laosfoundation.io
 const web3 = new Web3('https://rpc.laossigma.laosfoundation.io');
 
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
 
 // The address of the recipient of the asset
-const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
+const recipient = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 
 // The contract address of a collection in LAOS Sigma testnet.
 // This must either be a collection owned by the sender,
@@ -41,7 +43,7 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 //   Polygon uERC-721 contract: 0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF
 //   LAOS Sigma sibling collection: 0xfFFfFffffFffFFfFFffffffe000000000000000D
 
-const laosCollectionAddr = '0xfFFfFffffFffFFfFFffffffe000000000000000D';
+const laosCollectionAddr = '0xfFFFfffFFffFFFfffffffFFE000000000000010A';
 
 // The IPFS address with the metadata of the asset to be minted.
 // You can use the ipfs-uploader.js script in these examples to
@@ -70,14 +72,21 @@ async function main() {
     const slot = getRandomBigInt(2n ** 96n - 1n);
 
     // Prepare the mint transaction
-    const encodedABI = contract.methods.mintWithExternalURI(toAddress, slot, tokenURI).encodeABI();
+    const gasPrice = await web3.eth.getGasPrice();
+    const encodedABI = contract.methods.mintWithExternalURI(recipient, slot, tokenURI).encodeABI();
     const fromAddress = web3.eth.accounts.privateKeyToAccount(privateKey).address;
+    const gasEstimate = await web3.eth.estimateGas({
+      to: laosCollectionAddr,
+      data: encodedABI,
+      from: fromAddress,
+    });
+
     const transaction = {
       from: fromAddress,
       to: laosCollectionAddr,
       data: encodedABI,
-      gas: 35000,
-      gasPrice: web3.utils.toWei('0.5', 'gwei'), // Set the desired gas price
+      gas: gasEstimate,
+      gasPrice,
     };
 
     // Sign and send the transaction
@@ -86,8 +95,8 @@ async function main() {
 
     const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
     const blockNumber = await web3.eth.getBlockNumber();
-    console.log('Current block number:', blockNumber);
-    console.log('Transaction confirmed. Asset minted in block number:', receipt.blockNumber);
+    console.log('Current block number:', Number(blockNumber));
+    console.log('Transaction confirmed. Asset minted in block number:', Number(receipt.blockNumber));
 
     // Retrieve the token ID from the transaction receipt
     const mintEventABI = contractABI.find((abi) => abi.name === 'MintedWithExternalURI' && abi.type === 'event');

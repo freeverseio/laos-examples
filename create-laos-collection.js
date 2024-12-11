@@ -7,7 +7,9 @@ require('dotenv').config();
 const { Web3 } = require('web3');
 const axios = require('axios');
 
-// Initialize Web3 instance with LAOS node provider
+// Initialize Web3 instance with LAOS node provider. Public nodes:
+// * LAOS Mainnet: https://rpc.laos.laosfoundation.io
+// * LAOS Testnet: https://rpc.laossigma.laosfoundation.io
 const web3 = new Web3('https://rpc.laossigma.laosfoundation.io');
 
 // Environment variables
@@ -29,7 +31,7 @@ async function main() {
     const contract = new web3.eth.Contract(contractABI, contractAddress);
 
     // Prepare the transaction
-    const gasPrice = await web3.eth.getGasPrice(); // Get current gas price
+    const gasPrice = await web3.eth.getGasPrice();
     const encodedABI = contract.methods.createCollection(
       web3.eth.accounts.privateKeyToAccount(privateKey).address,
     ).encodeABI();
