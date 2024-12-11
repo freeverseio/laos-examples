@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const { ethers } = require('ethers');
 const axios = require('axios');
@@ -24,10 +26,8 @@ async function main() {
     const provider = new ethers.JsonRpcProvider('https://rpc.laossigma.laosfoundation.io');
     const wallet = new ethers.Wallet(privateKey, provider);
 
-    // Instantiate the contract
     const contract = new ethers.Contract(contractAddress, contractABI, wallet);
 
-    // Prepare and send the transaction
     console.log('Creating collection...');
     const tx = await contract.createCollection(wallet.address);
 
@@ -36,8 +36,10 @@ async function main() {
 
     console.log('Transaction confirmed. Collection created in block number:', receipt.blockNumber);
 
-    // Decode the emitted event
-    const event = receipt.logs.find(log => log.address.toLowerCase() === contractAddress.toLowerCase());
+    // Retrieve the contract address from the emitted event, via transaction receipt
+    const event = receipt.logs.find(
+      (log) => log.address.toLowerCase() === contractAddress.toLowerCase(),
+    );
     if (event) {
       const iface = new ethers.Interface(contractABI);
       const decodedEvent = iface.decodeEventLog('NewCollection', event.data, event.topics);
