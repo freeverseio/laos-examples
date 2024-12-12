@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /*
   Mints a single asset in the LAOS sibling collection,
   hence filling the corresponding slot created in the
@@ -78,7 +79,7 @@ async function main() {
     console.log('Transaction sent. Waiting for confirmation...');
     const receipt = await tx.wait();
 
-    console.log('Transaction confirmed. Collection created in block number:', receipt.blockNumber);
+    console.log('Transaction confirmed. Asset minted in block number:', receipt.blockNumber);
 
     // Retrieve the token ID from the transaction receipt
     const event = receipt.logs.find(
