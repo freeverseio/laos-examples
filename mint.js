@@ -1,8 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /*
   Mints a single asset in the LAOS sibling collection,
   hence filling the corresponding slot created in the
   ERC721 deployed in another chain.
-  The sender must be the owner of the collection in LAOS.
+  The sender must be the owner of the collection on LAOS.
 
   Bridgelessly minted assets are ready to be traded on chain, for example,
   using Etherscan/Polygonscan, by importing them to Metamask and using "Send",
@@ -16,19 +17,20 @@
   */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
-const { Web3 } = require('web3');
+const { ethers } = require('ethers');
 const axios = require('axios');
-
-// Initialize Web3 instance with LAOS node provider
-const web3 = new Web3('https://rpc.laossigma.laosfoundation.io');
 
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
+if (!privateKey) {
+  throw new Error('Please set PRIVATE_KEY in your .env file.');
+}
 
 // The address of the recipient of the asset
-const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
+const recipient = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 
 // The contract address of a collection in LAOS Sigma testnet.
+// Check the create-laos-collection.js script if you need to create one.
 // This must either be a collection owned by the sender,
 // or a collection with Public Minting enabled.
 // As examples, the following two uERC-721 contracts point to sibling LAOS Sigma
@@ -40,8 +42,7 @@ const toAddress = '0xA818cEF865c0868CA4cC494f673FcDaAD6a77cEA';
 //   Opensea Collection: https://opensea.io/collection/laos-bridgeless-minting-on-polygon-1
 //   Polygon uERC-721 contract: 0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF
 //   LAOS Sigma sibling collection: 0xfFFfFffffFffFFfFFffffffe000000000000000D
-
-const laosCollectionAddr = '0xfFFfFffffFffFFfFFffffffe000000000000000D';
+const laosCollectionAddr = '0xFFFfFFFffFfFfffFFffFffFe0000000000000191';
 
 // The IPFS address with the metadata of the asset to be minted.
 // You can use the ipfs-uploader.js script in these examples to
@@ -63,44 +64,31 @@ async function main() {
     const response = await axios.get(contractABIUrl);
     const contractABI = response.data;
 
-    // Instantiating the contract
-    const contract = new web3.eth.Contract(contractABI, laosCollectionAddr);
+    // Initialize Ethers provider and wallet
+    const provider = new ethers.JsonRpcProvider('https://rpc.laossigma.laosfoundation.io');
+    const wallet = new ethers.Wallet(privateKey, provider);
+
+    const contract = new ethers.Contract(laosCollectionAddr, contractABI, wallet);
 
     // Generate a random slot number
     const slot = getRandomBigInt(2n ** 96n - 1n);
 
-    // Prepare the mint transaction
-    const encodedABI = contract.methods.mintWithExternalURI(toAddress, slot, tokenURI).encodeABI();
-    const fromAddress = web3.eth.accounts.privateKeyToAccount(privateKey).address;
-    const transaction = {
-      from: fromAddress,
-      to: laosCollectionAddr,
-      data: encodedABI,
-      gas: 35000,
-      gasPrice: web3.utils.toWei('0.5', 'gwei'), // Set the desired gas price
-    };
+    console.log(`Minting asset to recipient: ${recipient}`);
+    const tx = await contract.mintWithExternalURI(recipient, slot, tokenURI);
 
-    // Sign and send the transaction
-    const signedTx = await web3.eth.accounts.signTransaction(transaction, privateKey);
     console.log('Transaction sent. Waiting for confirmation...');
+    const receipt = await tx.wait();
 
-    const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-    const blockNumber = await web3.eth.getBlockNumber();
-    console.log('Current block number:', blockNumber);
     console.log('Transaction confirmed. Asset minted in block number:', receipt.blockNumber);
 
     // Retrieve the token ID from the transaction receipt
-    const mintEventABI = contractABI.find((abi) => abi.name === 'MintedWithExternalURI' && abi.type === 'event');
-    const mintEvent = receipt.logs.find(
+    const event = receipt.logs.find(
       (log) => log.address.toLowerCase() === laosCollectionAddr.toLowerCase(),
     );
-    if (mintEvent && mintEventABI) {
-      const decodedLog = web3.eth.abi.decodeLog(
-        mintEventABI.inputs,
-        mintEvent.data,
-        mintEvent.topics.slice(1),
-      );
-      console.log(`Token ID: ${decodedLog._tokenId}`);
+    if (event) {
+      const iface = new ethers.Interface(contractABI);
+      const decodedEvent = iface.decodeEventLog('MintedWithExternalURI', event.data, event.topics);
+      console.log(`New Token ID: ${decodedEvent._tokenId}`);
     } else {
       console.log('Mint event log not found.');
     }

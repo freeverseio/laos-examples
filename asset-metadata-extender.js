@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /*
   Permissionlessly extends the metadata of any asset in any chain
   If the same sender has a previous extension of the same asset,
@@ -5,16 +6,16 @@
 */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
-const { Web3 } = require('web3');
+const { ethers } = require('ethers');
 const axios = require('axios');
-
-// Initialize Web3 instance with LAOS node provider
-const web3 = new Web3('https://rpc.laossigma.laosfoundation.io');
 
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
+if (!privateKey) {
+  throw new Error('Please set PRIVATE_KEY in your .env file.');
+}
 
-// The universal location of the asset to be extended (in Ethereum, because of 7:1)
+// The universal location of the asset to be extended (in Ethereum, hennce the 7:1)
 const assetUniversalLocation = 'uloc://GlobalConsensus(7:1)/AccountKey20(0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d)/GeneralKey(3099)';
 
 // The ipfs address containing the newly added metadata
@@ -32,43 +33,28 @@ async function main() {
     const response = await axios.get(contractABIUrl);
     const contractABI = response.data;
 
-    // Instantiating the contract
-    const contract = new web3.eth.Contract(contractABI, contractAddress);
+    // Initialize Ethers provider and wallet
+    const provider = new ethers.JsonRpcProvider('https://rpc.laossigma.laosfoundation.io');
+    const wallet = new ethers.Wallet(privateKey, provider);
 
-    // Prepare the transaction
-    const gasPrice = await web3.eth.getGasPrice(); // Get current gas price
-    const encodedABI = contract.methods.extendULWithExternalURI(
-      assetUniversalLocation,
-      tokenURI,
-    ).encodeABI();
-    const account = web3.eth.accounts.privateKeyToAccount(privateKey);
-    const transaction = {
-      to: contractAddress,
-      data: encodedABI,
-      gas: 100000,
-      gasPrice,
-      nonce: await web3.eth.getTransactionCount(account.address),
-    };
+    const contract = new ethers.Contract(contractAddress, contractABI, wallet);
 
-    // Sign and send the transaction
-    const signedTx = await web3.eth.accounts.signTransaction(transaction, privateKey);
+    console.log(`Evolving asset at universal location: ${assetUniversalLocation}`);
+    const tx = await contract.extendULWithExternalURI(assetUniversalLocation, tokenURI);
+
     console.log('Transaction sent. Waiting for confirmation...');
+    const receipt = await tx.wait();
 
-    const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-    console.log('Transaction confirmed. Asset Metadata extension created in block number:', receipt.blockNumber);
+    console.log('Transaction confirmed. Asset metadata extended in block number:', receipt.blockNumber);
 
-    // Decode the log to find the universal location
-    const ExtensionEventABI = contractABI.find((abi) => abi.name === 'ExtendedULWithExternalURI' && abi.type === 'event');
-    const ExtensionEvent = receipt.logs.find(
+    // Retrieve the data emitted in the corresponding event from the transaction receipt
+    const event = receipt.logs.find(
       (log) => log.address.toLowerCase() === contractAddress.toLowerCase(),
     );
-    if (ExtensionEvent && ExtensionEventABI) {
-      const decodedLog = web3.eth.abi.decodeLog(
-        ExtensionEventABI.inputs,
-        ExtensionEvent.data,
-        ExtensionEvent.topics.slice(1),
-      );
-      console.log(`New asset metadata extension created with ID: ${decodedLog._universalLocation}`);
+    if (event) {
+      const iface = new ethers.Interface(contractABI);
+      const decodedEvent = iface.decodeEventLog('ExtendedULWithExternalURI', event.data, event.topics);
+      console.log(`Asset with universal location: ${decodedEvent._universalLocation} extended with tokenURI ${decodedEvent._tokenURI}`);
     } else {
       console.log('Extension event log not found.');
     }

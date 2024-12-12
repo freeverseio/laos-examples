@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /*
   Executes the Broadcast method on a deployed uERC721 contract
 
@@ -13,12 +14,14 @@
   */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
-const { Web3 } = require('web3');
-const BN = require('bn.js');
+const { ethers } = require('ethers');
 const axios = require('axios');
 
 // Environment variables
 const privateKey = process.env.PRIVATE_KEY;
+if (!privateKey) {
+  throw new Error('Please set PRIVATE_KEY in your .env file.');
+}
 
 /*
 This example will use the public collection on Polygon PoS:
@@ -26,9 +29,6 @@ This example will use the public collection on Polygon PoS:
  - Polygon uERC-721 contract: 0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF
  - LAOS Sigma sibling collection: 0xfFFfFffffFffFFfFFffffffe000000000000000D
 */
-
-// Initialize Web3 instance connected to a node provider of an ownership chain (e.g. Polygon PoS)
-const web3 = new Web3('https://polygon.llamarpc.com');
 
 // The contract address on Polygon and the tokenId of the asset to be broadcasted 
 const uERC721Address = '0x0cf5fc5b64d60c13894328b16042a4d8f8398ebf';
@@ -43,49 +43,31 @@ async function main() {
     const response = await axios.get(contractABIUrl);
     const contractABI = response.data;
 
-    // Instantiating the contract
-    const contract = new web3.eth.Contract(contractABI, uERC721Address);
+    // Initialize Ethers provider and wallet
+    const provider = new ethers.JsonRpcProvider('https://rpc.laossigma.laosfoundation.io');
+    const wallet = new ethers.Wallet(privateKey, provider);
 
-    // Fetch the current gas price (EIP-1559)
-    const { baseFeePerGas } = await web3.eth.getBlock('pending');
-    const maxPriorityFeePerGas = web3.utils.toWei('30', 'gwei');
-    const maxFeePerGas = new BN(baseFeePerGas).add(new BN(maxPriorityFeePerGas));
+    const contract = new ethers.Contract(uERC721Address, contractABI, wallet);
 
-    // Prepare the mint transaction
-    const encodedABI = contract.methods.broadcastSelfTransfer(tokenId).encodeABI();
-    const fromAddress = web3.eth.accounts.privateKeyToAccount(privateKey).address;
-    const transaction = {
-      from: fromAddress,
-      to: uERC721Address,
-      data: encodedABI,
-      maxPriorityFeePerGas,
-      maxFeePerGas: maxFeePerGas.toString(),
-    };
+    console.log(`Broadcasting asset with TokenId: ${tokenId}`);
+    const tx = await contract.broadcastSelfTransfer(tokenId);
 
-    // Sign and send the transaction
-    const signedTx = await web3.eth.accounts.signTransaction(transaction, privateKey);
     console.log('Transaction sent. Waiting for confirmation...');
+    const receipt = await tx.wait();
 
-    const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-    const blockNumber = await web3.eth.getBlockNumber();
-    console.log('Current block number:', blockNumber.toString());
-    console.log('Transaction confirmed. Asset broadcasted in block number:', receipt.blockNumber.toString());
+    console.log('Transaction confirmed. Asset minted in block number:', receipt.blockNumber);
 
-    // Retrieve the token ID from the transaction receipt
-    const transferABI = contractABI.find((abi) => abi.name === 'Transfer' && abi.type === 'event');
-    const transferEvent = receipt.logs.find(
+    // Retrieve the data emitted in the corresponding event from the transaction receipt
+    const event = receipt.logs.find(
       (log) => log.address.toLowerCase() === uERC721Address.toLowerCase(),
     );
-    if (transferEvent && transferABI) {
-      const decodedLog = web3.eth.abi.decodeLog(
-        transferABI.inputs,
-        transferEvent.data,
-        transferEvent.topics.slice(1),
-      );
-      console.log(`Broadcasted Token ID: ${decodedLog.tokenId}`);
-      console.log(`If you used the Polygon example, the asset should be tradeable on Opensea at: https://opensea.io/assets/matic/${uERC721Address}/${tokenId}`);
+    if (event) {
+      const iface = new ethers.Interface(uERC721Address);
+      const decodedEvent = iface.decodeEventLog('Transfer', event.data, event.topics);
+      console.log(`Broadcasted asset with Token ID: ${decodedEvent.tokenId}`);
     } else {
       console.log('Broadcast event log not found.');
+      console.log(`If you used the Polygon example, the asset should be tradeable on Opensea at: https://opensea.io/assets/matic/${uERC721Address}/${tokenId}`);
     }
   } catch (error) {
     console.error('Error:', error);
