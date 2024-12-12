@@ -52,7 +52,7 @@ node mint.js
 node evolve.js
 ```
 
-## Minting an asset on Ethereum or Polygon
+## Minting an Asset on Ethereum or Polygon
 
 The fastest way to bridgelessly mint an asset on Ethereum or Polygon (without paying any ETH or MATIC) is to use existing collections that have Public Minting enabled. 
 
@@ -66,8 +66,8 @@ The steps are as follows:
 
 If you used the suggested public collections in the example, the minted assets can be viewed at:
 
-* For assets minted in the [Ethereum public collection](https://testnet.apps.laosnetwork.io/collection/1/0xee5B64092Fb09a219baa4D0DF909ED730A85c67e):
+* For assets minted on the [Ethereum Public collection](https://testnet.apps.laosnetwork.io/collection/1/0xee5B64092Fb09a219baa4D0DF909ED730A85c67e):
 `https://testnet.apps.laosnetwork.io/asset/1/0xee5b64092fb09a219baa4d0df909ed730a85c67e/<tokenID>`
 
-* For assets minted in the [Polygon public collection](https://testnet.apps.laosnetwork.io/collection/137/0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF):
+* For assets minted on the [Polygon Public collection](https://testnet.apps.laosnetwork.io/collection/137/0x0Cf5Fc5b64d60c13894328b16042a4D8F8398EbF):
 `https://testnet.apps.laosnetwork.io/collection/137/0x30ebd8d3e9b5b303d2b0a81c5cc0ce90ff185e9c/<tokenID>`
