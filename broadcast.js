@@ -15,7 +15,6 @@
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const { ethers } = require('ethers');
-const BN = require('bn.js');
 const axios = require('axios');
 
 // Environment variables
