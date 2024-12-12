@@ -56,7 +56,7 @@ async function main() {
       const decodedEvent = iface.decodeEventLog('ExtendedULWithExternalURI', event.data, event.topics);
       console.log(`Asset with universal location: ${decodedEvent._universalLocation} extended with tokenURI ${decodedEvent._tokenURI}`);
     } else {
-      console.log('Evolution event log not found.');
+      console.log('Extension event log not found.');
     }
   } catch (error) {
     console.error('Error:', error);
