@@ -10,7 +10,7 @@ if (!privateKey) {
   throw new Error('Please set PRIVATE_KEY in your .env file.');
 }
 
-// The precompiled contract address exposing collection creation
+// The precompiled contract address exposing collection creation at protocol level:
 const contractAddress = '0x0000000000000000000000000000000000000403';
 
 // The URL of the interface ABI, from GitHub
