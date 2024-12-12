@@ -61,7 +61,7 @@ The steps are as follows:
 1. Place an image that you would like to be associated with the asset in the `./imgs` folder.
 2. Edit the `main()` function of the `ipfs-uploader.js` script to use the path to the image, as well as the title, description, and associated metadata of the asset. Run the script.
 3. Paste the resulting `ipfs://...` output from `ipfs-uploader.js` into the `tokenURI` variable of the `mint.js` script.
-4. Ensure that the `laosCollectionAddr` and `toAddress` variables are set to your requirements, as explained in the script comments. Run the script.
+4. Ensure that the `laosCollectionAddr` and `recipient` variables are set to your requirements, as explained in the script comments. Run the script.
 5. The output of the script is a `tokenID`.
 
 If you used the suggested public collections in the example, the minted assets can be viewed at:
