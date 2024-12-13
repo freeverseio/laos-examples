@@ -21,7 +21,7 @@ const contractABIUrl = 'https://github.com/freeverseio/laos/blob/main/pallets/la
  * @param {ethers.Wallet} wallet - The ethers.js wallet instance.
  * @returns {Promise<string>} - The address of the created collection.
  */
-async function createCollection(wallet) {
+async function createLAOSCollection(wallet) {
   try {
     // Fetching the contract ABI
     const response = await axios.get(contractABIUrl);
@@ -60,11 +60,11 @@ async function main() {
   const provider = new ethers.JsonRpcProvider('https://rpc.laossigma.laosfoundation.io');
   const wallet = new ethers.Wallet(privateKey, provider);
 
-  const collectionAddress = await createCollection(wallet);
+  const collectionAddress = await createLAOSCollection(wallet);
   console.log('Collection successfully created at address:', collectionAddress);
 }
 
-module.exports = { createCollection };
+module.exports = { createLAOSCollection };
 
 if (require.main === module) {
   main();
