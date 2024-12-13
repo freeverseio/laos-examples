@@ -3,7 +3,6 @@ require('dotenv').config();
 const { ethers } = require('ethers');
 const axios = require('axios');
 
-// Environment variables
 const { PRIVATE_KEY } = process.env;
 if (!PRIVATE_KEY) {
   throw new Error('Please set PRIVATE_KEY in your .env file.');
@@ -55,8 +54,9 @@ async function createLAOSCollection(wallet) {
 async function main() {
   const provider = new ethers.JsonRpcProvider(PROVIDER_URL);
   const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+  console.log('Deployer address:', wallet.address);
   const collectionAddress = await createLAOSCollection(wallet);
-  console.log('Collection successfully created at address:', collectionAddress);
+  console.log('LAOS sibling collection successfully created at address:', collectionAddress);
 }
 
 module.exports = { createLAOSCollection };
