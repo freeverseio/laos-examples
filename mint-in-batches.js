@@ -14,7 +14,7 @@ const SECONDS_BETWEEN_SUBMISSIONS = 4;
 // Public RPC nodes:
 // - LAOS Mainnet: https://rpc.laos.laosfoundation.io
 // - LAOS Sigma Testnet https://rpc.laossigma.laosfoundation.io
-const PROVIDER_URL = 'https://rpc.laossigma.laosfoundation.io';
+const PROVIDER_URL = 'https://rpc.laos.laosfoundation.io';
 
 const sleep = (seconds) => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
@@ -60,6 +60,7 @@ async function main() {
 
   let currentIndex = 0;
   let nonce = await provider.getTransactionCount(wallet.address);
+  const gasLimit = 2000000;
 
   while (currentIndex < assets.length) {
     const batch = assets.slice(currentIndex, currentIndex + BATCH_SIZE);
@@ -70,32 +71,24 @@ async function main() {
     const randoms = randomSlotArray(batch.length);
 
     const currentNonce = nonce;
-
-    console.log(await provider.getTransactionCount(wallet.address));
-    const tx = await batchMinter.mintWithExternalURIBatch(recipients, randoms, uris);// , { nonce: currentNonce });
-    await tx.wait();
-    // console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}`);
-    // tx.wait().then(() => console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}`));
-
-    // const txPromise = batchMinter.mintWithExternalURIBatch(recipients, randoms, uris, { nonce: currentNonce })
-    //   .then((tx) => {
-    //     console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}`);
-    //     return tx.wait().then(() => {
-    //       console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}`);
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.error(`Error in transaction with nonce ${currentNonce}:`, error);
-    //   });
+    const txPromise = batchMinter.mintWithExternalURIBatch(recipients, randoms, uris, { nonce: currentNonce, gasLimit })
+      .then((tx) => {
+        console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}`);
+        return tx.wait().then(() => {
+          console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}`);
+        });
+      })
+      .catch((error) => {
+        console.error(`Error in transaction with nonce ${currentNonce}:`, error);
+      });
+    txPromise.catch((error) => console.error(`Error handling transaction for nonce ${currentNonce}:`, error));
 
     nonce += 1;
     currentIndex += BATCH_SIZE;
 
-    // txPromise.catch((error) => console.error(`Error handling transaction for nonce ${nonce}:`, error));
     await sleep(SECONDS_BETWEEN_SUBMISSIONS);
   }
-
-  console.log('All batches processed.');
+  console.log('All batches sent');
 }
 
 if (require.main === module) {
