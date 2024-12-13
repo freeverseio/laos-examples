@@ -1,0 +1,15 @@
+[
+    {
+      "recipient": "0x1234567890abcdef1234567890abcdef12345678",
+      "tokenURI": "ipfs://Qm1"
+    },
+    {
+      "recipient": "0xabcdef1234567890abcdef1234567890abcdef12",
+      "tokenURI": "ipfs://Qm2"
+    },
+    {
+      "recipient": "0x7890abcdef1234567890abcdef1234567890abcd",
+      "tokenURI": "ipfs://Qm3"
+    }
+  ]
+  
