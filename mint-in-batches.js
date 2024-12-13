@@ -8,7 +8,7 @@ const fs = require('fs');
 const { PRIVATE_KEY } = process.env;
 if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 
-const BATCH_SIZE = 2;
+const BATCH_SIZE = 12;
 const SECONDS_BETWEEN_SUBMISSIONS = 4;
 
 // Public RPC nodes:
@@ -60,26 +60,38 @@ async function main() {
 
   let currentIndex = 0;
   let nonce = await provider.getTransactionCount(wallet.address);
-  // let nonce = 0;
 
   while (currentIndex < assets.length) {
     const batch = assets.slice(currentIndex, currentIndex + BATCH_SIZE);
     console.log(`Processing batch with nonce ${nonce}, size ${batch.length}, at idx = ${currentIndex}`);
 
     const recipients = batch.map((asset) => asset.recipient);
-    console.log(recipients);
     const uris = batch.map((asset) => asset.tokenURI);
-    console.log(uris);
     const randoms = randomSlotArray(batch.length);
-    console.log(randoms);
 
-    const tx = await batchMinter.mintWithExternalURIBatch(recipients, randoms, uris, { nonce });
-    console.log(`Transaction with nonce ${nonce} sent: ${tx.hash}`);
+    const currentNonce = nonce;
+
+    console.log(await provider.getTransactionCount(wallet.address));
+    const tx = await batchMinter.mintWithExternalURIBatch(recipients, randoms, uris);// , { nonce: currentNonce });
     await tx.wait();
-    console.log(`Transaction with nonce ${nonce} confirmed`);
+    // console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}`);
+    // tx.wait().then(() => console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}`));
+
+    // const txPromise = batchMinter.mintWithExternalURIBatch(recipients, randoms, uris, { nonce: currentNonce })
+    //   .then((tx) => {
+    //     console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}`);
+    //     return tx.wait().then(() => {
+    //       console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}`);
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.error(`Error in transaction with nonce ${currentNonce}:`, error);
+    //   });
 
     nonce += 1;
     currentIndex += BATCH_SIZE;
+
+    // txPromise.catch((error) => console.error(`Error handling transaction for nonce ${nonce}:`, error));
     await sleep(SECONDS_BETWEEN_SUBMISSIONS);
   }
 
