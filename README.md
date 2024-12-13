@@ -42,8 +42,8 @@ node script_name.js
 A typical minimal path to get onboarded would be:
 
 ```bash
-# create a collection
-node create-laos-collection.js
+# setup bridgeless minting
+node setup-bridgeless-minting.js
 
 # copy-paste the generated LAOS collection address in the mint.js script, then:
 node mint.js
