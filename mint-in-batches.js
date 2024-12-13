@@ -60,6 +60,8 @@ async function main() {
 
   let currentIndex = 0;
   let nonce = await provider.getTransactionCount(wallet.address);
+  // The gasLimit needs to be estimated for all TXs because those sent with
+  // nonces larger than the current nonce revert when trying to estimate gas
   const gasLimit = 2000000;
 
   while (currentIndex < assets.length) {
