@@ -4,9 +4,7 @@ const { ethers } = require('ethers');
 const axios = require('axios');
 
 const { PRIVATE_KEY } = process.env;
-if (!PRIVATE_KEY) {
-  throw new Error('Please set PRIVATE_KEY in your .env file.');
-}
+if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 
 // Public RPC nodes:
 // - LAOS Mainnet: https://rpc.laos.laosfoundation.io

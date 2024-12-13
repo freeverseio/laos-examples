@@ -4,9 +4,7 @@ const { ethers } = require('ethers');
 const axios = require('axios');
 
 const { PRIVATE_KEY } = process.env;
-if (!PRIVATE_KEY) {
-  throw new Error('Please set PRIVATE_KEY in your .env file.');
-}
+if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 
 // Choose an RPC provider for the EVM chain you want to deploy the uERC721:
 const PROVIDER_URL = 'https://polygon-bor-rpc.publicnode.com';
@@ -68,6 +66,8 @@ async function main() {
   const collectionAddress = await deploy721(LAOS_SIBLING_COLLECTION, wallet);
   console.log('ERC721 successfully deployed at address:', collectionAddress);
 }
+
+module.exports = { deploy721 };
 
 if (require.main === module) {
   main();
