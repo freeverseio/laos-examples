@@ -32,12 +32,14 @@ function displayInfo(laosSiblingCollection) {
   const text = laosSiblingCollection.isLAOSMainnet ? 'Mainnet' : 'Sigma Testnet';
   console.log(`Deploying ERC721 contract linked to sibling LAOS ${text} collection at ${laosSiblingCollection.address}`);
 }
+
 /**
- * Deploys a new uERC721 on the EVM chain specified by its RPC node
- * @param {ethers.AddressLike} laosCollectionAddr - The sibling collection address on LAOS
- * @param {boolean} isLAOSMainnet - true: if sibling collection is on LAOS mainnet; false: for LAOS Sigma Testnet
- * @param {ethers.Wallet} wallet - The ethers.js wallet instance.
- * @returns {Promise<string>} - The address of the deployed contract
+ * Deploys a new uERC721 contract on the specified EVM chain using the provided RPC node.
+ * @param {Object} laosSiblingCollection - An object containing information about the sibling collection on LAOS.
+ * @param {string} laosSiblingCollection.address - The sibling collection address on LAOS.
+ * @param {boolean} laosSiblingCollection.isLAOSMainnet - Indicates whether the sibling collection is on LAOS Mainnet (true) or Sigma Testnet (false).
+ * @param {ethers.Wallet} wallet - An ethers.js wallet instance connected to the desired provider.
+ * @returns {Promise<string>} - The address of the deployed uERC721 contract.
  */
 async function deploy721(laosSiblingCollection, wallet) {
   const CONTRACT_ABI_URL = 'https://github.com/freeverseio/laos-erc721/blob/main/artifacts/contracts/ERC721Universal.sol/ERC721Universal.json?raw=true';
