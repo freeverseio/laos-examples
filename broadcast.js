@@ -44,8 +44,9 @@ async function main() {
     const contractABI = response.data;
 
     // Initialize Ethers provider and wallet
-    const provider = new ethers.JsonRpcProvider('https://rpc.laossigma.laosfoundation.io');
+    const provider = new ethers.JsonRpcProvider('https://polygon.drpc.org');
     const wallet = new ethers.Wallet(privateKey, provider);
+    console.log('Sender address:', wallet.address);
 
     const contract = new ethers.Contract(uERC721Address, contractABI, wallet);
 
@@ -62,7 +63,7 @@ async function main() {
       (log) => log.address.toLowerCase() === uERC721Address.toLowerCase(),
     );
     if (event) {
-      const iface = new ethers.Interface(uERC721Address);
+      const iface = new ethers.Interface(contractABI);
       const decodedEvent = iface.decodeEventLog('Transfer', event.data, event.topics);
       console.log(`Broadcasted asset with Token ID: ${decodedEvent.tokenId}`);
     } else {
