@@ -11,7 +11,8 @@ if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 // Write all assets to be minted in a json file:
 const ALL_ASSETS_FILE = './mint-in-batches.assets.json';
 
-// The script will mint them in batches, each transaction containing BATCH_SIZE new assets:
+// The script will mint them in batches, each transaction containing BATCH_SIZE new assets.
+// Recommended max size is currently 700; it will be 2800 (4x) when async backing is integrated.
 const BATCH_SIZE = 700;
 
 // The script waits for these seconds between sending each batch transaction,

@@ -2,7 +2,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 const data = [];
-const NUM_ENTRIES = 20; // Change this to adjust the number of entries
+const NUM_ENTRIES = 5000;
 const HARDCODED_TOKEN_URI = 'ipfs://QmSMxLznvbvHUshnjo1TJyUSkxoLgPs35fjSivgzZ3XWhy';
 
 function generateRandomAddress() {
