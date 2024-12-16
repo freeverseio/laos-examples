@@ -76,9 +76,9 @@ async function main() {
     const recipients = batch.map((asset) => asset.recipient);
     const uris = batch.map((asset) => asset.tokenURI);
     const randoms = randomSlotArray(batch.length);
-
     const currentNonce = nonce;
-    const txPromise = batchMinter.mintWithExternalURIBatch(recipients, randoms, uris, { nonce: currentNonce, gasLimit })
+
+    batchMinter.mintWithExternalURIBatch(recipients, randoms, uris, { nonce: currentNonce, gasLimit })
       .then((tx) => {
         console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}`);
         return tx.wait().then(() => {
@@ -88,7 +88,6 @@ async function main() {
       .catch((error) => {
         console.error(`Error in transaction with nonce ${currentNonce}:`, error);
       });
-    txPromise.catch((error) => console.error(`Error handling transaction for nonce ${currentNonce}:`, error));
 
     nonce += 1;
     currentIndex += BATCH_SIZE;
