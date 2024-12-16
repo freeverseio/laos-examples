@@ -1,9 +1,9 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /*
   Permissionlessly extends the metadata of any asset in any chain
   If the same sender has a previous extension of the same asset,
   the TX will revert. Use the corresponding update method in such case.
 */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const { ethers } = require('ethers');

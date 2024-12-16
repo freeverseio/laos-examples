@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /*
   Executes the Broadcast method on a deployed uERC721 contract
 
@@ -11,7 +10,8 @@
 
   The front end at https://testnet.apps.laosnetwork.io/asset/<networkId>/<uERC721Address>/<tokenID>
   can be used to facilitate importing to Metamask and broadcasting.
-  */
+*/
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const { ethers } = require('ethers');

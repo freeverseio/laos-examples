@@ -1,8 +1,8 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /*
   Updates the metadata of an asset.
   The sender must be the owner of the collection in LAOS.
 */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const { ethers } = require('ethers');

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /*
   Mints a single asset in the LAOS sibling collection,
   hence filling the corresponding slot created in the
@@ -14,7 +13,8 @@
 
   The front end at https://testnet.apps.laosnetwork.io/asset/<networkId>/<uERC721_address>/<tokenID>
   can be used to facilitate importing to Metamask and broadcasting.
-  */
+*/
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const { ethers } = require('ethers');

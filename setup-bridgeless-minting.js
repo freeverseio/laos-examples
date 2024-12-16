@@ -1,3 +1,9 @@
+/*
+  Sets up an EVM chain that uses bridgeless minting on LAOS to scale.
+  It first creates a collection on the LAOS Network. Once created,
+  the collection's address is used to deploy an ERC721 contract on
+  the EVM chain, which links to the LAOS collection as its sibling.
+*/
 /* eslint-disable max-len */
 require('dotenv').config();
 const { ethers } = require('ethers');
