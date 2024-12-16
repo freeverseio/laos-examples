@@ -14,18 +14,19 @@ const SECONDS_BETWEEN_SUBMISSIONS = 4;
 // Public RPC nodes:
 // - LAOS Mainnet: https://rpc.laos.laosfoundation.io
 // - LAOS Sigma Testnet https://rpc.laossigma.laosfoundation.io
-const PROVIDER_URL = 'https://rpc.laos.laosfoundation.io';
+const PROVIDER_URL = 'https://rpc.laossigma.laosfoundation.io';
 
-const sleep = (seconds) => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+const sleep = (seconds) => new Promise((resolve) => { setTimeout(resolve, seconds * 1000); });
 
 function randomSlot() {
   return (BigInt(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)) ** 2n) % BigInt(2n ** 96n - 1n);
 }
 
+// Returns an array of random 'slot' params to be used for minting to a recipient
 function randomSlotArray(n) {
   const result = new Set();
   while (result.size < n) {
-    result.add(randomSlot()); // Call the function to get its return value
+    result.add(randomSlot());
   }
   return Array.from(result);
 }
@@ -60,9 +61,13 @@ async function main() {
 
   let currentIndex = 0;
   let nonce = await provider.getTransactionCount(wallet.address);
-  // The gasLimit needs to be estimated for all TXs because those sent with
-  // nonces larger than the current nonce revert when trying to estimate gas
-  const gasLimit = 2000000;
+
+  // In general, gasLimit is estimated automatically by ethers. In this case, however,
+  // gasLimit needs to be manually specified for all TXs, because the script sends simultaneous
+  // transactions, each with an incremented nonce, so that they are propagated and included in blocks
+  // as soon as possible. Ethers reverts when trying to automatically estimate gas for nonces larger
+  // than the current nonce, because there is no way to simulate them.
+  const gasLimit = 10000000;
 
   while (currentIndex < assets.length) {
     const batch = assets.slice(currentIndex, currentIndex + BATCH_SIZE);
