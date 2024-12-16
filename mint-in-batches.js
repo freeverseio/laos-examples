@@ -1,3 +1,18 @@
+/*
+  This script mints all assets described in the ALL_ASSETS_FILE in batches of BATCH_SIZE.
+  Each batch is sent in a separate transaction, as large as possible, with a delay of
+  SECONDS_BETWEEN_SUBMISSIONS between sends to reduce the risk of being blocked by public nodes.
+
+  Transactions are sent with incremental nonces, relying on the network of LAOS nodes
+  to handle their sequential ordering and inclusion in the blockchain.
+
+  In a real-world scenario, it is recommended to carefully prepare the ALL_ASSETS_FILE
+  with the specific assets you need to mint. This may include unique recipient addresses
+  and customized tokenURIs tailored to your requirements.
+
+  The asset attributes can be uploaded to IPFS either before or after the minting process.
+  However, uploading them beforehand is the recommended approach.
+*/
 /* eslint-disable no-await-in-loop */
 /* eslint-disable max-len */
 require('dotenv').config();
