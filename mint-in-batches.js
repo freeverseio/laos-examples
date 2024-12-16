@@ -8,7 +8,14 @@ const fs = require('fs');
 const { PRIVATE_KEY } = process.env;
 if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 
+// Write all assets to be minted in a json file:
+const ALL_ASSETS_FILE = './mint-in-batches.assets.json';
+
+// The script will mint them in batches, each transaction containing BATCH_SIZE new assets:
 const BATCH_SIZE = 12;
+
+// The script waits for these seconds between sending each batch transaction,
+// to reduce the likelihood of being throttled or blocked by public nodes.
 const SECONDS_BETWEEN_SUBMISSIONS = 4;
 
 // Public RPC nodes:
@@ -57,7 +64,7 @@ async function main() {
   const batchMinter = await deployBatchMinter(wallet);
   console.log('BatchMinter successfully deployed at address:', await batchMinter.getAddress());
 
-  const assets = JSON.parse(fs.readFileSync('mint-in-batches.assets.json', 'utf8'));
+  const assets = JSON.parse(fs.readFileSync(ALL_ASSETS_FILE, 'utf8'));
 
   let currentIndex = 0;
   let nonce = await provider.getTransactionCount(wallet.address);
