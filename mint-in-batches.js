@@ -12,7 +12,7 @@ if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 const ALL_ASSETS_FILE = './mint-in-batches.assets.json';
 
 // The script will mint them in batches, each transaction containing BATCH_SIZE new assets:
-const BATCH_SIZE = 12;
+const BATCH_SIZE = 700;
 
 // The script waits for these seconds between sending each batch transaction,
 // to reduce the likelihood of being throttled or blocked by public nodes.
@@ -74,7 +74,7 @@ async function main() {
   // transactions, each with an incremented nonce, so that they are propagated and included in blocks
   // as soon as possible. Ethers reverts when trying to automatically estimate gas for nonces larger
   // than the current nonce, because there is no way to simulate them.
-  const gasLimit = 10000000;
+  const gasLimit = 13000000;
 
   while (currentIndex < assets.length) {
     const batch = assets.slice(currentIndex, currentIndex + BATCH_SIZE);
