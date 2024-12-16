@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /*
   This script mints all assets described in the ALL_ASSETS_FILE in batches of BATCH_SIZE.
   Each batch is sent in a separate transaction, as large as possible, with a delay of
@@ -32,7 +33,9 @@ const BATCH_SIZE = 700;
 
 // The script waits for these seconds between sending each batch transaction,
 // to reduce the likelihood of being throttled or blocked by public nodes.
-const SECONDS_BETWEEN_SUBMISSIONS = 4;
+const SECONDS_BETWEEN_SUBMISSIONS = 2;
+
+const MAX_NUM_TXS_WAITING = 2;
 
 // Public RPC nodes:
 // - LAOS Mainnet: https://rpc.laos.laosfoundation.io
@@ -92,7 +95,9 @@ async function main() {
   // than the current nonce, because there is no way to simulate them.
   const gasLimit = 13000000;
 
+  let nWaiting = 0;
   while (currentIndex < assets.length) {
+    // if (nWaiting > 4) return;
     const batch = assets.slice(currentIndex, currentIndex + BATCH_SIZE);
     console.log(`Processing batch with nonce ${nonce}, size ${batch.length}, at idx = ${currentIndex}`);
 
@@ -103,9 +108,10 @@ async function main() {
 
     batchMinter.mintWithExternalURIBatch(recipients, randoms, uris, { nonce: currentNonce, gasLimit })
       .then((tx) => {
-        console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}`);
+        console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}. nWaiting: ${nWaiting}`);
         return tx.wait().then(() => {
-          console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}`);
+          nWaiting -= 1;
+          console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}. nWaiting: ${nWaiting}`);
         });
       })
       .catch((error) => {
@@ -113,9 +119,13 @@ async function main() {
       });
 
     nonce += 1;
+    nWaiting += 1;
     currentIndex += BATCH_SIZE;
 
-    await sleep(SECONDS_BETWEEN_SUBMISSIONS);
+    while (nWaiting > 2) {
+      console.log(`Waiting, nWaitin: ${nWaiting}`);
+      await sleep(6);
+    }
   }
   console.log('All batches sent');
 }
