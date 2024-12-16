@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /*
   This script mints all assets described in the ALL_ASSETS_FILE in batches of BATCH_SIZE.
   Each batch is sent in a separate transaction, as large as possible, with a delay of
@@ -30,9 +31,14 @@ const ALL_ASSETS_FILE = './assetsForBatchMinting/mint-in-batches.assets.json';
 // Recommended max size is currently 700; it will be 2800 (4x) when async backing is integrated.
 const BATCH_SIZE = 700;
 
-// The script waits for these seconds between sending each batch transaction,
+// The script makes sure that there aren't more than MAX_NUM_TXS_WAITING in the nodes' pools,
+// by waiting SECS_TO_WAIT before sending a new batch transaction,
 // to reduce the likelihood of being throttled or blocked by public nodes.
-const SECONDS_BETWEEN_SUBMISSIONS = 4;
+const MAX_NUM_TXS_WAITING = 15;
+const SECS_TO_WAIT = 12;
+
+// The script makes sure that there aren't too many TXs waiting in the node's pools, before sending a new batch transaction,
+// to reduce the likelihood of being throttled or blocked by public nodes.
 
 // Public RPC nodes:
 // - LAOS Mainnet: https://rpc.laos.laosfoundation.io
@@ -92,6 +98,7 @@ async function main() {
   // than the current nonce, because there is no way to simulate them.
   const gasLimit = 13000000;
 
+  let nTxsWaiting = 0;
   while (currentIndex < assets.length) {
     const batch = assets.slice(currentIndex, currentIndex + BATCH_SIZE);
     console.log(`Processing batch with nonce ${nonce}, size ${batch.length}, at idx = ${currentIndex}`);
@@ -103,9 +110,10 @@ async function main() {
 
     batchMinter.mintWithExternalURIBatch(recipients, randoms, uris, { nonce: currentNonce, gasLimit })
       .then((tx) => {
-        console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}`);
+        console.log(`Transaction with nonce ${currentNonce} sent: ${tx.hash}. Current number of TXs in pool: ${nTxsWaiting}`);
         return tx.wait().then(() => {
-          console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}`);
+          nTxsWaiting -= 1;
+          console.log(`Transaction with nonce ${currentNonce} confirmed: ${tx.hash}. Current number of TXs in pool: ${nTxsWaiting}`);
         });
       })
       .catch((error) => {
@@ -113,9 +121,13 @@ async function main() {
       });
 
     nonce += 1;
+    nTxsWaiting += 1;
     currentIndex += BATCH_SIZE;
 
-    await sleep(SECONDS_BETWEEN_SUBMISSIONS);
+    while (nTxsWaiting >= MAX_NUM_TXS_WAITING) {
+      console.log(`Waiting because current number of TXs in pool: ${nTxsWaiting}`);
+      await sleep(SECS_TO_WAIT);
+    }
   }
   console.log('All batches sent');
 }
