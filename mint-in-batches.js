@@ -34,7 +34,7 @@ const BATCH_SIZE = 700;
 // The script makes sure that there aren't more than MAX_NUM_TXS_WAITING in the nodes' pools,
 // by waiting SECS_TO_WAIT before sending a new batch transaction,
 // to reduce the likelihood of being throttled or blocked by public nodes.
-const MAX_NUM_TXS_WAITING = 4;
+const MAX_NUM_TXS_WAITING = 15;
 const SECS_TO_WAIT = 12;
 
 // The script makes sure that there aren't too many TXs waiting in the node's pools, before sending a new batch transaction,
@@ -124,7 +124,7 @@ async function main() {
     nTxsWaiting += 1;
     currentIndex += BATCH_SIZE;
 
-    while (nTxsWaiting > MAX_NUM_TXS_WAITING) {
+    while (nTxsWaiting >= MAX_NUM_TXS_WAITING) {
       console.log(`Waiting because current number of TXs in pool: ${nTxsWaiting}`);
       await sleep(SECS_TO_WAIT);
     }
