@@ -1,3 +1,9 @@
+/*
+  Deploys a uERC721 contract on any EVM, linked to a sibling LAOS collection.
+
+  Refer to the `setup-bridgeless-minting` script for an example of how to set up
+  both contracts.
+*/
 /* eslint-disable max-len */
 require('dotenv').config();
 const { ethers } = require('ethers');

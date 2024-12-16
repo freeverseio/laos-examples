@@ -1,3 +1,11 @@
+/*
+  Creates a collection on the LAOS Network. Once created, the collection's address
+  can be used to deploy an ERC721 contract on any EVM chain, which links to the
+  LAOS collection as its sibling.
+
+  Refer to the `setup-bridgeless-minting` script for an example of how to set up
+  both contracts.
+*/
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const { ethers } = require('ethers');
