@@ -39,20 +39,39 @@ Run the scripts via:
 node script_name.js
 ```
 
-A typical minimal path to get onboarded would be:
+Supported scripts:
 
 ```bash
-# setup bridgeless minting
+# Deploys properly configured contracts on LAOS and an EVM chain of choice
+# to enable scaling via Bridgeless Minting:
 node setup-bridgeless-minting.js
 
-# copy-paste the generated LAOS collection address in the mint.js script, then:
+# Creates a sibling collection on the LAOS Network. This is the 1st step used by 'setup-bridgeless-minting'.
+node create-laos-collection.js
+
+# Deploys a uERC721 contract on the chosen EVM chain. This is the 2nd step used by 'setup-bridgeless-minting'.
+node deploy721.js
+
+# Mints a single asset to an existing sibling collection on the LAOS Network.
 node mint.js
 
-# copy-paste the generated Token ID, and the LAOS collection address, in the evolve.js script, then:
+# Mints a large number of assets in batches, efficiently filling each block to maximize throughput.
+node mint-in-batches.js
+
+# Evolves an asset previously minted on a sibling collection.
 node evolve.js
+
+# Demonstrates how to upload asset metadata to IPFS.
+node ipfs-uploader.js
+
+#  Emits a transfer event on the EVM chain to notify marketplaces that do not yet natively integrate with LAOS.
+node broadcast.js
+
+# Extends the metadata of any asset on any EVM chain in a permissionless manner.
+node asset-metadata-extender.js
 ```
 
-## Minting an Asset on Ethereum or Polygon
+## Brief tutorial: minting an Asset on Ethereum or Polygon
 
 The fastest way to bridgelessly mint an asset on Ethereum or Polygon (without paying any ETH or MATIC) is to use existing collections that have Public Minting enabled. 
 
