@@ -1,11 +1,12 @@
 /* eslint-disable no-loop-func */
 /*
   This script mints all assets described in the ALL_ASSETS_FILE in batches of BATCH_SIZE.
-  Each batch is sent in a separate transaction, as large as possible, with a delay of
-  SECONDS_BETWEEN_SUBMISSIONS between sends to reduce the risk of being blocked by public nodes.
+  Each batch is sent in a separate transaction, as large as possible.
 
   Transactions are sent with incremental nonces, relying on the network of LAOS nodes
-  to handle their sequential ordering and inclusion in the blockchain.
+  to handle their sequential ordering and inclusion in the blockchain. The script makes
+  sure that there aren't more than MAX_NUM_TXS_WAITING in the nodes' pools,
+  to reduce the likelihood of being throttled or blocked by public nodes.
 
   In a real-world scenario, it is recommended to carefully prepare the ALL_ASSETS_FILE
   with the specific assets you need to mint. This may include unique recipient addresses
@@ -27,18 +28,14 @@ if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 // Write all assets to be minted in a json file:
 const ALL_ASSETS_FILE = './assetsForBatchMinting/mint-in-batches.assets.json';
 
-// The script will mint them in batches, each transaction containing BATCH_SIZE new assets.
 // Recommended max size is currently 700; it will be 2800 (4x) when async backing is integrated.
 const BATCH_SIZE = 700;
 
-// The script makes sure that there aren't more than MAX_NUM_TXS_WAITING in the nodes' pools,
-// by waiting SECS_TO_WAIT before sending a new batch transaction,
-// to reduce the likelihood of being throttled or blocked by public nodes.
 const MAX_NUM_TXS_WAITING = 15;
-const SECS_TO_WAIT = 12;
 
-// The script makes sure that there aren't too many TXs waiting in the node's pools, before sending a new batch transaction,
-// to reduce the likelihood of being throttled or blocked by public nodes.
+// The amount of secs to wait when the pool already has MAX_NUM_TXS_WAITING,
+// before trying to send a new batch:
+const SECS_TO_WAIT = 12;
 
 // Public RPC nodes:
 // - LAOS Mainnet: https://rpc.laos.laosfoundation.io
