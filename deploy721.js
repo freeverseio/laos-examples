@@ -28,7 +28,7 @@ const ERC721Symbol = 'CoolLaos';
 function buildBaseURI(laosSiblingCollection) {
   const baseULOC = laosSiblingCollection.isLAOSMainnet
     ? 'https://uloc.io/GlobalConsensus(2)/Parachain(3370)/PalletInstance(51)'
-    : 'GlobalConsensus(0:0x77afd6190f1554ad45fd0d31aee62aacc33c6db0ea801129acb813f913e0764f)/Parachain(4006)/PalletInstance(51)';
+    : 'https://uloc.io/GlobalConsensus(0:0x77afd6190f1554ad45fd0d31aee62aacc33c6db0ea801129acb813f913e0764f)/Parachain(4006)/PalletInstance(51)';
   return `${baseULOC}/AccountKey20(${laosSiblingCollection.address})/`;
 }
 
