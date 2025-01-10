@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { gql } from "@apollo/client";
 import client from "@/lib/apolloClient";
 import Image from "next/image";
+import { useParams } from "next/navigation"; // Import the hook to access params dynamically
 
 type Attribute = {
   value: string;
@@ -53,24 +54,19 @@ const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({ src, alt }) => {
   );
 };
 
-export default function NFTPage({
-  params,
-}: {
-  params: { chainId: string; collectionAddress: string; tokenId: string };
-}) {
+export default function NFTPage() {
+  const params = useParams(); // Use `useParams()` to dynamically retrieve route params
+
   const [nftDetails, setNftDetails] = useState<NFTDetails | null>(null);
 
   useEffect(() => {
-    console.log('PARMAS')
-    console.log(params)
+    console.log("Params: ", params);
+
     const fetchNFTDetails = async () => {
       try {
         const { data } = await client.query({
           query: gql`
-            query GetNFTDetails(
-              $collectionAddress: String!
-              $tokenId: String!
-            ) {
+            query GetNFTDetails($collectionAddress: String!, $tokenId: String!) {
               polygon {
                 token(
                   contractAddress: $collectionAddress
