@@ -21,6 +21,7 @@ type NFTDetails = {
   name: string;
   owner: string;
   tokenUri: string;
+  tokenId: string;
 };
 
 function getImageUrl(ipfsUrl: string): string {
@@ -51,6 +52,7 @@ export default function HomePage() {
                   name
                   owner
                   tokenUri
+                  tokenId
                 }
               }
             }
@@ -71,7 +73,8 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1>NFT Details</h1>
+      <h1>NFT Viewer</h1>
+      <p>TokenId: {nftDetails?.tokenId || "not defined"}</p>
       <p>Name: {nftDetails?.name || "not defined"}</p>
       <p>Description: {nftDetails?.description || "not defined"}</p>
       <p>Contract Name: {nftDetails?.contractName || "not defined"}</p>
