@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Minimalistic Asset Viewer using the LAOS API
+
+This example demonstrates a minimalistic Next.js App to display NFT details at the following URL:
+```
+http://localhost:3000/asset/[chainId]/[contractAddress]/[tokenId]
+```
+The data is fetched from the [LAOS public API](https://docs.laosnetwork.io/laos-api/introduction).
+
+While the API provides a simplified way to access NFT details,
+this information can also be retrieved directly from the LAOS blockchain by connecting to a [public node](https://docs.laosnetwork.io/introduction/laos-and-its-testnet)
+or [nunning your own node](https://docs.laosnetwork.io/the-laos-node/the-layer-1-node).
 
 ## Getting Started
 
-First, run the development server:
+Install and run the development server:
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Check your browser, by going, for example, to:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000/asset/137/0x2f40c1f77ea0634ac917dec84b1f81ce15168f60/8497449126796600337638709424460934217958989103543281851987122499457363821940
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy an Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
