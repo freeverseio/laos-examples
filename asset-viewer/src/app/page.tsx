@@ -14,14 +14,14 @@ type NFTDetails = {
   attributes?: Attribute[];
   contractName?: string;
   contractSymbol?: string;
-  createdAt: string;
-  description: string;
-  image: string;
-  initialOwner: string;
-  name: string;
-  owner: string;
-  tokenUri: string;
-  tokenId: string;
+  createdAt?: string;
+  description?: string;
+  image?: string;
+  initialOwner?: string;
+  name?: string;
+  owner?: string;
+  tokenUri?: string;
+  tokenId?: string;
 };
 
 interface ImageWithLoadingProps {
@@ -40,7 +40,7 @@ const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({ src, alt }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: 'auto' }}>
+    <div style={{ position: "relative", width: "100%", height: "auto" }}>
       {isLoading && <p>Loading Image...</p>}
       <Image
         src={src}
@@ -63,7 +63,10 @@ export default function HomePage() {
           query: gql`
             query GetNFTDetails {
               polygon {
-                  token(contractAddress: "0x2f40c1f77ea0634ac917dec84b1f81ce15168f60", tokenId: "8497449126796600337638709424460934217958989103543281851987122499457363821940") {
+                token(
+                  contractAddress: "0x2f40c1f77ea0634ac917dec84b1f81ce15168f60"
+                  tokenId: "8497449126796600337638709424460934217958989103543281851987122499457363821940"
+                ) {
                   attributes
                   contractName
                   contractSymbol
@@ -106,15 +109,15 @@ export default function HomePage() {
       <p>Current Owner: {nftDetails?.owner || "not defined"}</p>
       <p>Token URI: {nftDetails?.tokenUri || "not defined"}</p>
       {nftDetails?.image && (
-        <ImageWithLoading 
-          src={getImageUrl(nftDetails.image)} 
-          alt="NFT Image" 
+        <ImageWithLoading
+          src={getImageUrl(nftDetails.image)}
+          alt="NFT Image"
         />
       )}
       <h3>Attributes:</h3>
       <ul>
         {nftDetails?.attributes?.length > 0 ? (
-          nftDetails?.attributes.map((attr, index) => (
+          nftDetails.attributes.map((attr, index) => (
             <li key={index}>
               {attr.traitType}: {attr.value}
             </li>
