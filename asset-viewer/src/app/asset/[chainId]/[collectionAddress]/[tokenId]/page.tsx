@@ -33,7 +33,7 @@ interface ImageWithLoadingProps {
 const SUPPORTED_CHAINS: Record<string, string> = {
   "1": "ethereum",
   "137": "polygon",
-  // Add other supported chains here
+  "296": "hederatestnet",
 };
 
 function getImageUrl(ipfsUrl: string): string {
@@ -63,14 +63,18 @@ const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({ src, alt }) => {
 export default function NFTPage() {
   const params = useParams();
   const [nftDetails, setNftDetails] = useState<NFTDetails | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchNFTDetails = async () => {
       try {
         const chainName = SUPPORTED_CHAINS[params.chainId];
         if (!chainName) {
-          console.error("Unsupported chain ID:", params.chainId);
+          setErrorMessage(
+            `Unsupported chain ID: ${params.chainId}. Supported chains are: ${Object.keys(SUPPORTED_CHAINS).join(
+              ", "
+            )}`
+          );
           return;
         }
     
@@ -112,7 +116,12 @@ export default function NFTPage() {
     fetchNFTDetails();
   }, [params]);
 
-  if (error) return <p>{error}</p>;
+  if (errorMessage) {
+    return (
+        <p>{errorMessage}</p>
+    );
+  }
+  
   if (!nftDetails) return <p>Loading NFT details...</p>;
 
   return (
