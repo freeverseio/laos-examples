@@ -4,10 +4,15 @@ import React, { useEffect, useState } from "react";
 import { gql } from "@apollo/client";
 import client from "@/lib/apolloClient";
 
+type Attribute = {
+  value: string;
+  traitType: string;
+};
+
 type NFTDetails = {
-  attributes?: string[]; // Adjust to match the API response structure
-  contractName: string;
-  contractSymbol: string;
+  attributes?: Attribute[];
+  contractName?: string;
+  contractSymbol?: string;
   createdAt: string;
   description: string;
   image: string;
@@ -27,7 +32,7 @@ export default function HomePage() {
           query: gql`
             query GetNFTDetails {
               polygon {
-                  token(contractAddress: "0x69ba6320041d7a8eeeeb18054d85e8ff1726bf04", tokenId: "2117177865313235697172373569158509151370659628068") {
+                  token(contractAddress: "0x2f40c1f77ea0634ac917dec84b1f81ce15168f60", tokenId: "8497449126796600337638709424460934217958989103543281851987122499457363821940") {
                   attributes
                   contractName
                   contractSymbol
@@ -44,6 +49,7 @@ export default function HomePage() {
           `,
         });
 
+        console.log("GraphQL query response:", data);
         setNftDetails(data.polygon.token);
       } catch (error) {
         console.error("Error fetching NFT details:", error);
@@ -57,14 +63,14 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1>{nftDetails.name}</h1>
-      <p>{nftDetails.description}</p>
-      <img src={nftDetails.image} alt={nftDetails.name} />
+      <h1>{nftDetails?.name}</h1>
+      <p>{nftDetails?.description}</p>
       <ul>
-        {Array.isArray(nftDetails.attributes) && 
-          nftDetails.attributes.map((attr, index) => (
-            <li key={index}>{attr}</li>
-          ))}
+        {nftDetails?.attributes.map((attr, index) => (
+          <li key={index}>
+            {attr.traitType}: {attr.value}
+          </li>
+        ))}
       </ul>
     </div>
   );
