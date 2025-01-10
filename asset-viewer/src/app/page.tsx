@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { gql } from "@apollo/client";
 import client from "@/lib/apolloClient";
+import Image from "next/image";
 
 type Attribute = {
   value: string;
@@ -63,14 +64,35 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1>{nftDetails?.name}</h1>
-      <p>{nftDetails?.description}</p>
+      <h1>NFT Details</h1>
+      <p>Name: {nftDetails?.name || "not defined"}</p>
+      <p>Description: {nftDetails?.description || "not defined"}</p>
+      <p>Contract Name: {nftDetails?.contractName || "not defined"}</p>
+      <p>Contract Symbol: {nftDetails?.contractSymbol || "not defined"}</p>
+      <p>Created At: {nftDetails?.createdAt || "not defined"}</p>
+      <p>Initial Owner: {nftDetails?.initialOwner || "not defined"}</p>
+      <p>Current Owner: {nftDetails?.owner || "not defined"}</p>
+      <p>Token URI: {nftDetails?.tokenUri || "not defined"}</p>
+      {nftDetails?.image && (
+        <Image
+          src={nftDetails.image.replace("ipfs://", "https://ipfs.io/ipfs/")}
+          alt="NFT Image"
+          width={300} // Specify desired width
+          height={300} // Specify desired height
+          style={{ objectFit: "contain" }}
+        />
+      )}
+      <h3>Attributes:</h3>
       <ul>
-        {nftDetails?.attributes.map((attr, index) => (
-          <li key={index}>
-            {attr.traitType}: {attr.value}
-          </li>
-        ))}
+        {nftDetails?.attributes?.length > 0 ? (
+          nftDetails?.attributes.map((attr, index) => (
+            <li key={index}>
+              {attr.traitType}: {attr.value}
+            </li>
+          ))
+        ) : (
+          <li>Attributes: not defined</li>
+        )}
       </ul>
     </div>
   );
