@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { gql } from "@apollo/client";
 import client from "@/lib/apolloClient";
 import Image from "next/image";
-import { useParams } from "next/navigation"; // Import the hook to access params dynamically
+import { useParams } from "next/navigation";
 
 type Attribute = {
   value: string;
@@ -29,6 +29,12 @@ interface ImageWithLoadingProps {
   src: string;
   alt: string;
 }
+
+const SUPPORTED_CHAINS: Record<string, string> = {
+  "1": "ethereum",
+  "137": "polygon",
+  // Add other supported chains here
+};
 
 function getImageUrl(ipfsUrl: string): string {
   if (ipfsUrl.startsWith("ipfs://")) {
@@ -55,46 +61,49 @@ const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({ src, alt }) => {
 };
 
 export default function NFTPage() {
-  const params = useParams(); // Use `useParams()` to dynamically retrieve route params
-
+  const params = useParams();
   const [nftDetails, setNftDetails] = useState<NFTDetails | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("Params: ", params);
-
     const fetchNFTDetails = async () => {
       try {
-        const { data } = await client.query({
-          query: gql`
-            query GetNFTDetails($collectionAddress: String!, $tokenId: String!) {
-              polygon {
-                token(
-                  contractAddress: $collectionAddress
-                  tokenId: $tokenId
-                ) {
-                  attributes
-                  contractName
-                  contractSymbol
-                  createdAt
-                  description
-                  image
-                  initialOwner
-                  name
-                  owner
-                  tokenUri
-                  tokenId
-                }
+        const chainName = SUPPORTED_CHAINS[params.chainId];
+        if (!chainName) {
+          console.error("Unsupported chain ID:", params.chainId);
+          return;
+        }
+    
+        const QUERY = gql`
+          query GetNFTDetails($collectionAddress: String!, $tokenId: String!) {
+            ${chainName} {
+              token(contractAddress: $collectionAddress, tokenId: $tokenId) {
+                attributes
+                contractName
+                contractSymbol
+                createdAt
+                description
+                image
+                initialOwner
+                name
+                owner
+                tokenUri
+                tokenId
               }
             }
-          `,
+          }
+        `;
+    
+        const { data } = await client.query({
+          query: QUERY,
           variables: {
             collectionAddress: params.collectionAddress,
             tokenId: params.tokenId,
           },
         });
-
+    
         console.log("GraphQL query response:", data);
-        setNftDetails(data.polygon.token);
+        setNftDetails(data[chainName]?.token);
       } catch (error) {
         console.error("Error fetching NFT details:", error);
       }
@@ -103,6 +112,7 @@ export default function NFTPage() {
     fetchNFTDetails();
   }, [params]);
 
+  if (error) return <p>{error}</p>;
   if (!nftDetails) return <p>Loading NFT details...</p>;
 
   return (
