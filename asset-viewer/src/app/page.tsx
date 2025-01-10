@@ -116,10 +116,10 @@ export default function HomePage() {
       )}
       <h3>Attributes:</h3>
       <ul>
-        {nftDetails?.attributes?.length > 0 ? (
+        {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (
           nftDetails.attributes.map((attr, index) => (
             <li key={index}>
-              {attr.traitType}: {attr.value}
+              {attr.traitType || "Unknown"}: {attr.value || "Unknown"}
             </li>
           ))
         ) : (
