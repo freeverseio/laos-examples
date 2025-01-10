@@ -20,7 +20,7 @@ export default function NFTPage() {
   useEffect(() => {
     const fetchNFTDetails = async () => {
       try {
-        const chainName = SUPPORTED_CHAINS[params.chainId];
+        const chainName = SUPPORTED_CHAINS[params.chainId as string];
         if (!chainName) {
           setErrorMessage(
             `Unsupported chain ID: ${params.chainId}. Supported chains are: ${Object.keys(SUPPORTED_CHAINS).join(
