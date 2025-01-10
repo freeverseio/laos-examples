@@ -176,7 +176,7 @@ export default function NFTPage() {
         {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (
           nftDetails.attributes.map((attr, index) => (
             <li key={index}>
-              <span style={{ color: "lime" }}>{attr.traitType || "Unknown"}:</span> {attr.value || "Unknown"}
+              {attr.traitType || "Unknown"}: {attr.value || "Unknown"}
             </li>
           ))
         ) : (
