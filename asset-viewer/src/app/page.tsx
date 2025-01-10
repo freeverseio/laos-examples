@@ -5,7 +5,7 @@ import { gql } from "@apollo/client";
 import client from "@/lib/apolloClient";
 
 type NFTDetails = {
-  attributes: string[];
+  attributes?: string[]; // Adjust to match the API response structure
   contractName: string;
   contractSymbol: string;
   createdAt: string;
@@ -17,19 +17,17 @@ type NFTDetails = {
   tokenUri: string;
 };
 
-export default function Home() {
+export default function HomePage() {
   const [nftDetails, setNftDetails] = useState<NFTDetails | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchNFTDetails = async () => {
       try {
         const { data } = await client.query({
           query: gql`
-            query MyQuery {
+            query GetNFTDetails {
               polygon {
-                token(contractAddress: "0x123...", tokenId: "1") {
+                  token(contractAddress: "0x69ba6320041d7a8eeeeb18054d85e8ff1726bf04", tokenId: "2117177865313235697172373569158509151370659628068") {
                   attributes
                   contractName
                   contractSymbol
@@ -47,37 +45,27 @@ export default function Home() {
         });
 
         setNftDetails(data.polygon.token);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching NFT details:", error);
       }
     };
 
     fetchNFTDetails();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (!nftDetails) return <p>Loading NFT details...</p>;
 
   return (
     <div>
-      <h1>{nftDetails?.name}</h1>
-      <img src={nftDetails?.image} alt={nftDetails?.name} style={{ maxWidth: "300px" }} />
-      <p>{nftDetails?.description}</p>
+      <h1>{nftDetails.name}</h1>
+      <p>{nftDetails.description}</p>
+      <img src={nftDetails.image} alt={nftDetails.name} />
       <ul>
-        {nftDetails?.attributes.map((attr, index) => (
-          <li key={index}>{attr}</li>
-        ))}
+        {Array.isArray(nftDetails.attributes) && 
+          nftDetails.attributes.map((attr, index) => (
+            <li key={index}>{attr}</li>
+          ))}
       </ul>
-      <p>Contract Name: {nftDetails?.contractName}</p>
-      <p>Contract Symbol: {nftDetails?.contractSymbol}</p>
-      <p>Created At: {nftDetails?.createdAt}</p>
-      <p>Initial Owner: {nftDetails?.initialOwner}</p>
-      <p>Owner: {nftDetails?.owner}</p>
-      <a href={nftDetails?.tokenUri} target="_blank" rel="noopener noreferrer">
-        Token URI
-      </a>
     </div>
   );
 }
