@@ -23,6 +23,13 @@ type NFTDetails = {
   tokenUri: string;
 };
 
+function getImageUrl(ipfsUrl: string): string {
+  if (ipfsUrl.startsWith("ipfs://")) {
+    return ipfsUrl.replace("ipfs://", "https://ipfs.io/ipfs/");
+  }
+  return ipfsUrl;
+}
+
 export default function HomePage() {
   const [nftDetails, setNftDetails] = useState<NFTDetails | null>(null);
 
@@ -75,7 +82,7 @@ export default function HomePage() {
       <p>Token URI: {nftDetails?.tokenUri || "not defined"}</p>
       {nftDetails?.image && (
         <Image
-          src={nftDetails.image.replace("ipfs://", "https://ipfs.io/ipfs/")}
+          src={getImageUrl(nftDetails.image)}
           alt="NFT Image"
           width={300} // Specify desired width
           height={300} // Specify desired height
