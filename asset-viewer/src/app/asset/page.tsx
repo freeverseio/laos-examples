@@ -53,7 +53,11 @@ const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({ src, alt }) => {
   );
 };
 
-export default function HomePage() {
+export default function NFTPage({
+  params,
+}: {
+  params: { chainId: string; collectionAddress: string; tokenId: string };
+}) {
   const [nftDetails, setNftDetails] = useState<NFTDetails | null>(null);
 
   useEffect(() => {
@@ -61,11 +65,14 @@ export default function HomePage() {
       try {
         const { data } = await client.query({
           query: gql`
-            query GetNFTDetails {
+            query GetNFTDetails(
+              $collectionAddress: String!
+              $tokenId: String!
+            ) {
               polygon {
                 token(
-                  contractAddress: "0x2f40c1f77ea0634ac917dec84b1f81ce15168f60"
-                  tokenId: "8497449126796600337638709424460934217958989103543281851987122499457363821940"
+                  contractAddress: $collectionAddress
+                  tokenId: $tokenId
                 ) {
                   attributes
                   contractName
@@ -82,6 +89,10 @@ export default function HomePage() {
               }
             }
           `,
+          variables: {
+            collectionAddress: params.collectionAddress,
+            tokenId: params.tokenId,
+          },
         });
 
         console.log("GraphQL query response:", data);
@@ -92,53 +103,34 @@ export default function HomePage() {
     };
 
     fetchNFTDetails();
-  }, []);
+  }, [params]);
 
   if (!nftDetails) return <p>Loading NFT details...</p>;
 
   return (
     <div>
-      <p>
-        <span style={{ color: "lime" }}>TokenId:</span> {nftDetails?.tokenId || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Name:</span> {nftDetails?.name || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Description:</span> {nftDetails?.description || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Contract Name:</span> {nftDetails?.contractName || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Contract Symbol:</span> {nftDetails?.contractSymbol || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Created At:</span> {nftDetails?.createdAt || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Initial Owner:</span> {nftDetails?.initialOwner || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Current Owner:</span> {nftDetails?.owner || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Token URI:</span> {nftDetails?.tokenUri || "not defined"}
-      </p>
+      <h1>NFT Viewer</h1>
+      <p style={{ color: "lime" }}>TokenId: {nftDetails?.tokenId || "not defined"}</p>
+      <p style={{ color: "lime" }}>Name: {nftDetails?.name || "not defined"}</p>
+      <p style={{ color: "lime" }}>Description: {nftDetails?.description || "not defined"}</p>
+      <p style={{ color: "lime" }}>Contract Name: {nftDetails?.contractName || "not defined"}</p>
+      <p style={{ color: "lime" }}>Contract Symbol: {nftDetails?.contractSymbol || "not defined"}</p>
+      <p style={{ color: "lime" }}>Created At: {nftDetails?.createdAt || "not defined"}</p>
+      <p style={{ color: "lime" }}>Initial Owner: {nftDetails?.initialOwner || "not defined"}</p>
+      <p style={{ color: "lime" }}>Current Owner: {nftDetails?.owner || "not defined"}</p>
+      <p style={{ color: "lime" }}>Token URI: {nftDetails?.tokenUri || "not defined"}</p>
       {nftDetails?.image && (
         <ImageWithLoading
           src={getImageUrl(nftDetails.image)}
           alt="NFT Image"
         />
       )}
-      <p>
-        <span style={{ color: "lime" }}>Attributes:</span>
-      </p>
+      <h3>Attributes:</h3>
       <ul>
         {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (
           nftDetails.attributes.map((attr, index) => (
             <li key={index}>
-              <span style={{ color: "lime" }}>{attr.traitType || "Unknown"}:</span> {attr.value || "Unknown"}
+              {attr.traitType || "Unknown"}: {attr.value || "Unknown"}
             </li>
           ))
         ) : (
