@@ -23,6 +23,7 @@ type NFTDetails = {
   owner?: string;
   tokenUri?: string;
   tokenId?: string;
+  laosContract?: string;
 };
 
 interface ImageWithLoadingProps {
@@ -93,6 +94,7 @@ export default function NFTPage() {
                 owner
                 tokenUri
                 tokenId
+                laosContract
               }
             }
           }
@@ -145,6 +147,9 @@ export default function NFTPage() {
       </p>
       <p>
         <span style={{ color: "lime" }}>Contract Symbol:</span> {nftDetails?.contractSymbol || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>LAOS Sibling Collection:</span> {nftDetails?.laosContract || "not defined"}
       </p>
       <p>
         <span style={{ color: "lime" }}>Created At:</span> {nftDetails?.createdAt || "not defined"}
