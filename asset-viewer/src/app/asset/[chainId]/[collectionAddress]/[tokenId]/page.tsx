@@ -1,36 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { gql } from "@apollo/client";
-import client from "@/lib/apolloClient";
-import Image from "next/image";
 import { useParams } from "next/navigation";
+import client from "@/lib/apolloClient";
 import getNFTDetailsQuery from "@/queries/getNFTDetails";
-
-type Attribute = {
-  value: string;
-  traitType: string;
-};
-
-type NFTDetails = {
-  attributes?: Attribute[];
-  contractName?: string;
-  contractSymbol?: string;
-  createdAt?: string;
-  description?: string;
-  image?: string;
-  initialOwner?: string;
-  name?: string;
-  owner?: string;
-  tokenUri?: string;
-  tokenId?: string;
-  laosContract?: string;
-};
-
-interface ImageWithLoadingProps {
-  src: string;
-  alt: string;
-}
+import NFTDetailsRenderer from "@/components/NFTDetailsRenderer";
 
 const SUPPORTED_CHAINS: Record<string, string> = {
   "1": "ethereum",
@@ -38,33 +12,9 @@ const SUPPORTED_CHAINS: Record<string, string> = {
   "296": "hederatestnet",
 };
 
-function getImageUrl(ipfsUrl: string): string {
-  if (ipfsUrl.startsWith("ipfs://")) {
-    return ipfsUrl.replace("ipfs://", "https://ipfs.io/ipfs/");
-  }
-  return ipfsUrl;
-}
-
-const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({ src, alt }) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  return (
-    <div style={{ position: "relative", width: "100%", height: "auto" }}>
-      {isLoading && <p>Loading Image...</p>}
-      <Image
-        src={src}
-        alt={alt}
-        width={500}
-        height={500}
-        onLoadingComplete={() => setIsLoading(false)}
-      />
-    </div>
-  );
-};
-
 export default function NFTPage() {
   const params = useParams();
-  const [nftDetails, setNftDetails] = useState<NFTDetails | null>(null);
+  const [nftDetails, setNftDetails] = useState<any | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -79,7 +29,7 @@ export default function NFTPage() {
           );
           return;
         }
-    
+
         const QUERY = getNFTDetailsQuery(chainName);
 
         const { data } = await client.query({
@@ -89,13 +39,14 @@ export default function NFTPage() {
             tokenId: params.tokenId,
           },
         });
-    
+
         if (!data[chainName]?.token) {
           setErrorMessage(
             `Token not found. Please verify the contract address (${params.collectionAddress}) and token ID (${params.tokenId}).`
           );
           return;
         }
+
         setNftDetails(data[chainName]?.token);
       } catch (error) {
         console.error("Error fetching NFT details:", error);
@@ -106,65 +57,10 @@ export default function NFTPage() {
   }, [params]);
 
   if (errorMessage) {
-    return (
-        <p>{errorMessage}</p>
-    );
+    return <p>{errorMessage}</p>;
   }
-  
+
   if (!nftDetails) return <p>Loading NFT details...</p>;
 
-  return (
-    <div>
-      <p>
-        <span style={{ color: "lime" }}>TokenId:</span> {nftDetails?.tokenId || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Name:</span> {nftDetails?.name || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Description:</span> {nftDetails?.description || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Contract Name:</span> {nftDetails?.contractName || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Contract Symbol:</span> {nftDetails?.contractSymbol || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>LAOS Sibling Collection:</span> {nftDetails?.laosContract || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Created At:</span> {nftDetails?.createdAt || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Initial Owner:</span> {nftDetails?.initialOwner || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Current Owner:</span> {nftDetails?.owner || "not defined"}
-      </p>
-      <p>
-        <span style={{ color: "lime" }}>Token URI:</span> {nftDetails?.tokenUri || "not defined"}
-      </p>
-      {nftDetails?.image && (
-        <ImageWithLoading
-          src={getImageUrl(nftDetails.image)}
-          alt="NFT Image"
-        />
-      )}
-      <p>
-        <span style={{ color: "lime" }}>Attributes:</span>
-      </p>
-      <ul>
-        {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (
-          nftDetails.attributes.map((attr, index) => (
-            <li key={index}>
-              {attr.traitType || "Unknown"}: {attr.value || "Unknown"}
-            </li>
-          ))
-        ) : (
-          <li>Attributes: not defined</li>
-        )}
-      </ul>
-    </div>
-  );
+  return <NFTDetailsRenderer nftDetails={nftDetails} />;
 }
