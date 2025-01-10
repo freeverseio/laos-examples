@@ -106,7 +106,12 @@ export default function NFTPage() {
           },
         });
     
-        console.log("GraphQL query response:", data);
+        if (!data[chainName]?.token) {
+          setErrorMessage(
+            `Token not found. Please verify the contract address (${params.collectionAddress}) and token ID (${params.tokenId}).`
+          );
+          return;
+        }
         setNftDetails(data[chainName]?.token);
       } catch (error) {
         console.error("Error fetching NFT details:", error);
