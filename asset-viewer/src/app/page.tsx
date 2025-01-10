@@ -24,12 +24,34 @@ type NFTDetails = {
   tokenId: string;
 };
 
+interface ImageWithLoadingProps {
+  src: string;
+  alt: string;
+}
+
 function getImageUrl(ipfsUrl: string): string {
   if (ipfsUrl.startsWith("ipfs://")) {
     return ipfsUrl.replace("ipfs://", "https://ipfs.io/ipfs/");
   }
   return ipfsUrl;
 }
+
+const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({ src, alt }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <div style={{ position: 'relative', width: '100%', height: 'auto' }}>
+      {isLoading && <p>Loading Image...</p>}
+      <Image
+        src={src}
+        alt={alt}
+        width={500}
+        height={500}
+        onLoadingComplete={() => setIsLoading(false)}
+      />
+    </div>
+  );
+};
 
 export default function HomePage() {
   const [nftDetails, setNftDetails] = useState<NFTDetails | null>(null);
@@ -84,12 +106,9 @@ export default function HomePage() {
       <p>Current Owner: {nftDetails?.owner || "not defined"}</p>
       <p>Token URI: {nftDetails?.tokenUri || "not defined"}</p>
       {nftDetails?.image && (
-        <Image
-          src={getImageUrl(nftDetails.image)}
-          alt="NFT Image"
-          width={300} // Specify desired width
-          height={300} // Specify desired height
-          style={{ objectFit: "contain" }}
+        <ImageWithLoading 
+          src={getImageUrl(nftDetails.image)} 
+          alt="NFT Image" 
         />
       )}
       <h3>Attributes:</h3>
