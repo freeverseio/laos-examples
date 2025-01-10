@@ -5,6 +5,7 @@ import { gql } from "@apollo/client";
 import client from "@/lib/apolloClient";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import getNFTDetailsQuery from "@/queries/getNFTDetails";
 
 type Attribute = {
   value: string;
@@ -79,27 +80,8 @@ export default function NFTPage() {
           return;
         }
     
-        const QUERY = gql`
-          query GetNFTDetails($collectionAddress: String!, $tokenId: String!) {
-            ${chainName} {
-              token(contractAddress: $collectionAddress, tokenId: $tokenId) {
-                attributes
-                contractName
-                contractSymbol
-                createdAt
-                description
-                image
-                initialOwner
-                name
-                owner
-                tokenUri
-                tokenId
-                laosContract
-              }
-            }
-          }
-        `;
-    
+        const QUERY = getNFTDetailsQuery(chainName);
+
         const { data } = await client.query({
           query: QUERY,
           variables: {
