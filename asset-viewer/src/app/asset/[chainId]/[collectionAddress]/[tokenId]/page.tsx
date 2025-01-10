@@ -117,28 +117,47 @@ export default function NFTPage() {
 
   return (
     <div>
-      <h1>NFT Viewer</h1>
-      <p style={{ color: "lime" }}>TokenId: {nftDetails?.tokenId || "not defined"}</p>
-      <p style={{ color: "lime" }}>Name: {nftDetails?.name || "not defined"}</p>
-      <p style={{ color: "lime" }}>Description: {nftDetails?.description || "not defined"}</p>
-      <p style={{ color: "lime" }}>Contract Name: {nftDetails?.contractName || "not defined"}</p>
-      <p style={{ color: "lime" }}>Contract Symbol: {nftDetails?.contractSymbol || "not defined"}</p>
-      <p style={{ color: "lime" }}>Created At: {nftDetails?.createdAt || "not defined"}</p>
-      <p style={{ color: "lime" }}>Initial Owner: {nftDetails?.initialOwner || "not defined"}</p>
-      <p style={{ color: "lime" }}>Current Owner: {nftDetails?.owner || "not defined"}</p>
-      <p style={{ color: "lime" }}>Token URI: {nftDetails?.tokenUri || "not defined"}</p>
+      <p>
+        <span style={{ color: "lime" }}>TokenId:</span> {nftDetails?.tokenId || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>Name:</span> {nftDetails?.name || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>Description:</span> {nftDetails?.description || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>Contract Name:</span> {nftDetails?.contractName || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>Contract Symbol:</span> {nftDetails?.contractSymbol || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>Created At:</span> {nftDetails?.createdAt || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>Initial Owner:</span> {nftDetails?.initialOwner || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>Current Owner:</span> {nftDetails?.owner || "not defined"}
+      </p>
+      <p>
+        <span style={{ color: "lime" }}>Token URI:</span> {nftDetails?.tokenUri || "not defined"}
+      </p>
       {nftDetails?.image && (
         <ImageWithLoading
           src={getImageUrl(nftDetails.image)}
           alt="NFT Image"
         />
       )}
-      <h3>Attributes:</h3>
+      <p>
+        <span style={{ color: "lime" }}>Attributes:</span>
+      </p>
       <ul>
         {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (
           nftDetails.attributes.map((attr, index) => (
             <li key={index}>
-              {attr.traitType || "Unknown"}: {attr.value || "Unknown"}
+              <span style={{ color: "lime" }}>{attr.traitType || "Unknown"}:</span> {attr.value || "Unknown"}
             </li>
           ))
         ) : (
