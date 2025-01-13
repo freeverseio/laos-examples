@@ -5,12 +5,7 @@ import { useParams } from "next/navigation";
 import client from "@/lib/apolloClient";
 import getNFTDetailsQuery from "@/queries/getNFTDetails";
 import NFTDetailsRenderer from "@/components/NFTDetailsRenderer";
-
-const SUPPORTED_CHAINS: Record<string, string> = {
-  "1": "ethereum",
-  "137": "polygon",
-  "296": "hederatestnet",
-};
+import SUPPORTED_CHAINS from "@/constants/supportedChains";
 
 export default function NFTPage() {
   const params = useParams();
@@ -62,5 +57,8 @@ export default function NFTPage() {
 
   if (!nftDetails) return <p>Loading NFT details...</p>;
 
-  return <NFTDetailsRenderer nftDetails={nftDetails} />;
+  const chainId = params.chainId;
+  const chainName = SUPPORTED_CHAINS[chainId as string];
+
+  return <NFTDetailsRenderer nftDetails={nftDetails} chainName={chainName} />;
 }

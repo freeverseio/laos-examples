@@ -4,25 +4,8 @@ import React, { useEffect, useState } from "react";
 import { gql } from "@apollo/client";
 import client from "@/lib/apolloClient";
 import Image from "next/image";
+import { NFTDetails } from "@/types/NFTTypes";
 
-type Attribute = {
-  value: string;
-  traitType: string;
-};
-
-type NFTDetails = {
-  attributes?: Attribute[];
-  contractName?: string;
-  contractSymbol?: string;
-  createdAt?: string;
-  description?: string;
-  image?: string;
-  initialOwner?: string;
-  name?: string;
-  owner?: string;
-  tokenUri?: string;
-  tokenId?: string;
-};
 
 interface ImageWithLoadingProps {
   src: string;

@@ -7,6 +7,7 @@ const getNFTDetailsQuery = (chainName: string) => gql`
         attributes
         contractName
         contractSymbol
+        contractAddress
         createdAt
         description
         image
