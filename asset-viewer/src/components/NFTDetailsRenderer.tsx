@@ -1,25 +1,6 @@
 import React from "react";
 import Image from "next/image";
-
-interface Attribute {
-  value: string;
-  traitType: string;
-}
-
-interface NFTDetails {
-  attributes?: Attribute[];
-  contractName?: string;
-  contractSymbol?: string;
-  createdAt?: string;
-  description?: string;
-  image?: string;
-  initialOwner?: string;
-  name?: string;
-  owner?: string;
-  tokenUri?: string;
-  tokenId?: string;
-  laosContract?: string;
-}
+import { NFTDetails } from "@/types/NFTTypes";
 
 interface ImageWithLoadingProps {
   src: string;
