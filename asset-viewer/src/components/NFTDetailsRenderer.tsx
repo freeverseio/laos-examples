@@ -30,14 +30,15 @@ const ImageWithLoading: React.FC<ImageWithLoadingProps> = ({ src, alt }) => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   return (
-    <div className="image-wrapper">
-      {isLoading && <p className="highlight">Loading Image...</p>}
+    <div className="image-container">
+      {isLoading && <p className="loading-text">Loading Image...</p>}
       <Image
         src={src}
         alt={alt}
         width={500}
         height={500}
         onLoadingComplete={() => setIsLoading(false)}
+        className="nft-image"
       />
     </div>
   );
@@ -56,68 +57,74 @@ interface NFTDetailsRendererProps {
 
 const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails }) => {
   return (
-    <div className="asset-viewer">
-      <p>
-        <span className="brandColor">TokenId:</span>{" "}
-        <span className="text-white">{nftDetails?.tokenId || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Name:</span>{" "}
-        <span className="text-white">{nftDetails?.name || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Description:</span>{" "}
-        <span className="text-white">{nftDetails?.description || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Contract Name:</span>{" "}
-        <span className="text-white">{nftDetails?.contractName || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Contract Symbol:</span>{" "}
-        <span className="text-white">{nftDetails?.contractSymbol || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">LAOS Sibling Collection:</span>{" "}
-        <span className="text-white">{nftDetails?.laosContract || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Created At:</span>{" "}
-        <span className="text-white">{nftDetails?.createdAt || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Initial Owner:</span>{" "}
-        <span className="text-white">{nftDetails?.initialOwner || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Current Owner:</span>{" "}
-        <span className="text-white">{nftDetails?.owner || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Token URI:</span>{" "}
-        <span className="text-white">{nftDetails?.tokenUri || "Not defined"}</span>
-      </p>
-      <p>
-        <span className="brandColor">Attributes:</span>
-      </p>
-      <ul>
-        {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (
-          nftDetails.attributes.map((attr, index) => (
-            <li key={index}>
-              <span className="highlight">{attr.traitType || "Unknown"}:</span>{" "}
-              <span className="text-white">{attr.value || "Unknown"}</span>
-            </li>
-          ))
-        ) : (
-          <li className="text-white">Attributes: Not defined</li>
+    <div className="nft-details-container">
+      {/* Header Section */}
+      <div className="nft-header">
+        {nftDetails?.image && (
+          <ImageWithLoading
+            src={getImageUrl(nftDetails.image)}
+            alt="NFT Image"
+          />
         )}
-      </ul>
-      {nftDetails?.image && (
-        <ImageWithLoading
-          src={getImageUrl(nftDetails.image)}
-          alt="NFT Image"
-        />
-      )}
+        <div className="nft-header-info">
+          <h1 className="nft-name">{nftDetails?.name || "Unnamed Asset"}</h1>
+          <div className="nft-meta">
+            <p>
+              <strong>Collection:</strong>{" "}
+              {nftDetails?.contractName || "Unknown"}
+            </p>
+            <p>
+              <strong>Blockchain:</strong> Polygon
+            </p>
+            <p>
+              <strong>Owned by:</strong>{" "}
+              <span className="owner-text">
+                {nftDetails?.owner || "Unknown"}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Details and Description Section */}
+      <div className="nft-details">
+        <div className="details-box">
+          <h2>Details</h2>
+          <p>
+            <strong>Contract Address:</strong>{" "}
+            {nftDetails?.laosContract || "Not defined"}
+          </p>
+          <p>
+            <strong>Token ID:</strong>{" "}
+            {nftDetails?.tokenId || "Not defined"}
+          </p>
+          <p>
+            <strong>Token Standard:</strong>{" "}
+            {nftDetails?.contractSymbol || "Not defined"}
+          </p>
+        </div>
+        <div className="description-box">
+          <h2>Description</h2>
+          <p>{nftDetails?.description || "No description available"}</p>
+        </div>
+      </div>
+
+      {/* Attributes Section */}
+      <div className="attributes-section">
+        <h2>Attributes</h2>
+        {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (
+          <ul className="attributes-list">
+            {nftDetails.attributes.map((attr, index) => (
+              <li key={index} className="attribute-item">
+                <span className="trait-type">{attr.traitType || "Unknown"}:</span>{" "}
+                <span className="value">{attr.value || "Unknown"}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="no-attributes">No attributes available</p>
+        )}
+      </div>
     </div>
   );
 };

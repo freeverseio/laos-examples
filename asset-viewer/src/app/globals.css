@@ -1,3 +1,79 @@
+.nft-details-container {
+  background: var(--gradient-mix-purple);
+  padding: 2rem;
+  border-radius: 8px;
+  color: white;
+}
+
+.nft-header {
+  display: flex;
+  gap: 2rem;
+}
+
+.image-container {
+  flex-shrink: 0;
+}
+
+.nft-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nft-name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--theme-primary);
+}
+
+.nft-meta {
+  font-size: 1rem;
+}
+
+.owner-text {
+  color: var(--fv-purple-dark);
+}
+
+.nft-details {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.details-box,
+.description-box {
+  flex: 1;
+  background: var(--highlight-bg);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.attributes-section {
+  margin-top: 2rem;
+  background: var(--highlight-bg);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.attributes-list {
+  list-style: none;
+  padding: 0;
+}
+
+.attribute-item {
+  margin: 0.5rem 0;
+}
+
+.trait-type {
+  font-weight: bold;
+  color: var(--theme-primary);
+}
+
+.value {
+  color: var(--fv-secondary-text);
+}
+
 :root {
   --fv-purple-light: rgba(208, 197, 224, 1);
   --fv-purple-dark: rgba(76, 47, 128, 1);
@@ -486,22 +562,8 @@ div.modalErrorBg {
   border-image: var(--Card-border) 1;
 }
 
-.leaderboard-bg {
-  background-image: url('/images/leaderboard_bg.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-body.leaderboard-bg footer {
-  filter: opacity(0.5);
-  border-top: 1px solid #b4b4b4;
-}
 @media screen and (max-width: 768px) {
 .col-sm-6 input {
   margin-bottom: 0.5rem;
 }
-}
-
-.text-white {
-  color: white;
 }
