@@ -47,7 +47,7 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails, cha
             alt="NFT Image"
           />
         )}
-        <div className="nft-header-info">
+        <div className="titleContainer">
           <h1 className="nft-name">{nftDetails?.name || "Unnamed Asset"}</h1>
           <div className="nft-meta">
             <p>
@@ -59,7 +59,7 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails, cha
             </p>
             <p>
               <strong>Owned by:</strong>{" "}
-              <span className="owner-text">
+              <span>
                 {nftDetails?.owner || "Unknown"}
               </span>
             </p>
@@ -68,8 +68,8 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails, cha
       </div>
 
       <div className="nft-details">
-        <div className="details-box">
-          <h2>Details</h2>
+      <div className="description-box">
+        <h1>Details</h1>
           <p>
             <strong>Contract Address on {chainName}:</strong>{" "}
             {nftDetails?.contractAddress || "Not defined"}
@@ -84,13 +84,13 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails, cha
           </p>
         </div>
         <div className="description-box">
-          <h2>Description</h2>
+          <h1>Description</h1>
           <p>{nftDetails?.description || "No description available"}</p>
         </div>
       </div>
 
       <div className="attributes-section">
-        <h2>Attributes</h2>
+        <h1>Attributes</h1>
         {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (
           <ul className="attributes-list">
             {nftDetails.attributes.map((attr, index) => (
