@@ -34,9 +34,10 @@ function getImageUrl(ipfsUrl: string): string {
 
 interface NFTDetailsRendererProps {
   nftDetails: NFTDetails;
+  chainName: string;
 }
 
-const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails }) => {
+const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails, chainName }) => {
   return (
     <div className="nft-details-container">
       <div className="nft-header">
@@ -54,7 +55,7 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails }) =
               {nftDetails?.contractAddress || "Unknown"}
             </p>
             <p>
-              <strong>Blockchain:</strong> Polygon
+              <strong>Blockchain:</strong> {chainName}
             </p>
             <p>
               <strong>Owned by:</strong>{" "}
@@ -66,21 +67,20 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails }) =
         </div>
       </div>
 
-      {/* Details and Description Section */}
       <div className="nft-details">
         <div className="details-box">
           <h2>Details</h2>
           <p>
-            <strong>Contract Address:</strong>{" "}
+            <strong>Contract Address on {chainName}:</strong>{" "}
+            {nftDetails?.contractAddress || "Not defined"}
+          </p>
+          <p>
+            <strong>Sibling Collection on LAOS:</strong>{" "}
             {nftDetails?.laosContract || "Not defined"}
           </p>
           <p>
             <strong>Token ID:</strong>{" "}
             {nftDetails?.tokenId || "Not defined"}
-          </p>
-          <p>
-            <strong>Token Standard:</strong>{" "}
-            {nftDetails?.contractSymbol || "Not defined"}
           </p>
         </div>
         <div className="description-box">
@@ -89,7 +89,6 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails }) =
         </div>
       </div>
 
-      {/* Attributes Section */}
       <div className="attributes-section">
         <h2>Attributes</h2>
         {nftDetails?.attributes && nftDetails.attributes.length > 0 ? (

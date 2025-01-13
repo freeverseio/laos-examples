@@ -57,5 +57,8 @@ export default function NFTPage() {
 
   if (!nftDetails) return <p>Loading NFT details...</p>;
 
-  return <NFTDetailsRenderer nftDetails={nftDetails} />;
+  const chainId = params.chainId;
+  const chainName = SUPPORTED_CHAINS[chainId as string];
+
+  return <NFTDetailsRenderer nftDetails={nftDetails} chainName={chainName} />;
 }
