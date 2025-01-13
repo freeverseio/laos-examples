@@ -55,6 +55,10 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails, cha
               {nftDetails?.contractAddress || "Unknown"}
             </p>
             <p>
+              <strong>Collection Name:</strong>{" "}
+              {nftDetails?.contractName || "Not Specified"}
+            </p>
+            <p>
               <strong>Blockchain:</strong> {chainName}
             </p>
             <p>
