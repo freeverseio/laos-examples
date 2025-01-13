@@ -24,6 +24,11 @@ Check your browser, by going, for example, to:
 http://localhost:3000/asset/137/0x2f40c1f77ea0634ac917dec84b1f81ce15168f60/8497449126796600337638709424460934217958989103543281851987122499457363821940
 
 
+## Entry Points
+
+* The main code executed when landing on a URL is [this file](./src/app/asset/[chainId]/[collectionAddress]/[tokenId]/page.tsx)
+* The API endpoint can be changed by editing [this file](./src/lib/apolloClient.ts)
+* The supported chains cen be changed by editing [this file](./src/constants/supportedChains.ts)
 
 ## Deploy on Vercel
 
