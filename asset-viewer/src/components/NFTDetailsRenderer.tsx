@@ -39,7 +39,6 @@ interface NFTDetailsRendererProps {
 const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails }) => {
   return (
     <div className="nft-details-container">
-      {/* Header Section */}
       <div className="nft-header">
         {nftDetails?.image && (
           <ImageWithLoading
@@ -52,7 +51,7 @@ const NFTDetailsRenderer: React.FC<NFTDetailsRendererProps> = ({ nftDetails }) =
           <div className="nft-meta">
             <p>
               <strong>Collection:</strong>{" "}
-              {nftDetails?.contractName || "Unknown"}
+              {nftDetails?.contractAddress || "Unknown"}
             </p>
             <p>
               <strong>Blockchain:</strong> Polygon

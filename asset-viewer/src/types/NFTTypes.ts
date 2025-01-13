@@ -5,8 +5,10 @@ export type Attribute = {
 
 export type NFTDetails = {
   attributes?: Attribute[];
+  collectionContract?: string;
   contractName?: string;
   contractSymbol?: string;
+  contractAddress?: string;
   createdAt?: string;
   description?: string;
   image?: string;
@@ -15,4 +17,5 @@ export type NFTDetails = {
   owner?: string;
   tokenUri?: string;
   tokenId?: string;
+  laosContract?: string;
 };
