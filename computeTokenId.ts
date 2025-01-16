@@ -1,4 +1,7 @@
-#!/usr/bin/env node
+/*
+  Illustrates how the tokenId of a newly minted asset is generated
+  as a function of its initial owwner address and a provide random number (slot)
+*/
 
 function computeTokenId(user, slot) {
   if (!/^0x[a-fA-F0-9]{40}$/.test(user)) {
@@ -9,10 +12,8 @@ function computeTokenId(user, slot) {
   }
 
   const slotBigInt = BigInt(slot) << 160n;
-  console.log(slotBigInt.toString(16))
   const userBigInt = BigInt(user);
   const tokenId = slotBigInt | userBigInt;
-
   return tokenId;
 }
 
@@ -31,6 +32,11 @@ function runTests() {
       expectedToHex: "0x000000000000000000000000ffffffffffffffffffffffffffffffffffffffff",
     },
     {
+      user: "0x0000000000000000000000000000000000000000",
+      slot: 0,
+      expected: "0",
+      expectedToHex: "0x0000000000000000000000000000000000000000000000000000000000000000",
+    },    {
       user: "0x0000000000000000000000000000000000000001",
       slot: 1,
       expected: "1461501637330902918203684832716283019655932542977",
