@@ -36,7 +36,7 @@ Each script contains comments in its code that should make it understandable. Mo
 Run the scripts via:
 
 ```bash
-node script_name.js
+node evm/script_name.js
 ```
 
 Supported scripts:
@@ -44,31 +44,31 @@ Supported scripts:
 ```bash
 # Deploys properly configured contracts on LAOS and an EVM chain of choice
 # to enable scaling via Bridgeless Minting:
-node setup-bridgeless-minting.js
+node evm/setup-bridgeless-minting.js
 
 # Creates a sibling collection on the LAOS Network. This is the 1st step used by 'setup-bridgeless-minting'.
-node create-laos-collection.js
+node evm/create-laos-collection.js
 
 # Deploys a uERC721 contract on the chosen EVM chain. This is the 2nd step used by 'setup-bridgeless-minting'.
-node deploy721.js
+node evm/deploy721.js
 
 # Mints a single asset to an existing sibling collection on the LAOS Network.
-node mint.js
+node evm/mint.js
 
 # Mints a large number of assets in batches, efficiently filling each block to maximize throughput.
-node mint-in-batches.js
+node evm/mint-in-batches.js
 
 # Evolves an asset previously minted on a sibling collection.
-node evolve.js
+node evm/evolve.js
 
 # Demonstrates how to upload asset metadata to IPFS.
-node ipfs-uploader.js
+node evm/ipfs-uploader.js
 
 #  Emits a transfer event on the EVM chain to notify marketplaces that do not yet natively integrate with LAOS.
-node broadcast.js
+node evm/broadcast.js
 
 # Extends the metadata of any asset on any EVM chain in a permissionless manner.
-node asset-metadata-extender.js
+node evm/asset-metadata-extender.js
 ```
 
 ## Brief tutorial: minting an Asset on Ethereum or Polygon
