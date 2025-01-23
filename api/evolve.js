@@ -17,42 +17,42 @@ const headers = {
   'x-api-key': `${LAOS_API_KEY}`,
 };
 
-const mintMutation = `
-  mutation MintNFT {
-    mint(
+const evolveMutation = `
+  mutation EvolveNFT {
+    evolveBatch(
       input: {
         chainId: "${chainId}"
         contractAddress: "${contractAddress}"
         tokens: [
           {
-            mintTo: "0x4E6Da57f62b9954fBb6bAb531F556BE08E128e75",
-            name: "First NFT",
-            description: "First NFT Description",
-            attributes: [{ trait_type: "Category", value: "Example" }],
-            image: "ipfs://HASH_1"
+            tokenId: "84345524707560823119048121584012148114012579678921297377141744356137354038901",
+            name: "First NFT Evolved",
+            description: "First NFT Description Evolved",
+            attributes: [{ trait_type: "Category", value: "Example Evolved" }],
+            image: "ipfs://HASH_AA"
           },
           {
-            mintTo: "0x4E6Da57f62b9954fBb6bAb531F556BE08E128e75",
-            name: "Second NFT",
-            description: "Second NFT Description",
-            attributes: [{ trait_type: "Category", value: "Example" }],
-            image: "ipfs://HASH_2"
+            tokenId: "20720131098342415923691492217621056541908060861074540068716680168395544628853",
+            name: "Second NFT Evolved",
+            description: "Second NFT Description Evolved",
+            attributes: [{ trait_type: "Category", value: "Example Evolved" }],
+            image: "ipfs://HASH_BB"
           }
         ]
       }
     ) {
-      tokenIds
+      tx
       success
     }
   }
 `;
 
-async function mintNFT() {
+async function evolveNFT() {
   try {
     console.log('API request sent. Please wait until the mint transaction is confirmed on LAOS...');
     const response = await axios.post(
       LAOS_API_ENDPOINT,
-      { query: mintMutation },
+      { query: evolveMutation },
       { headers },
     );
 
@@ -61,13 +61,12 @@ async function mintNFT() {
       return;
     }
 
-    const mintData = response.data.data.mint;
-    console.log('Mint successful. New NFTs minted with these tokenIDs:');
-    console.log(mintData.tokenIds);
-    console.log(`They can be traded directly on chaind ${chainId}, contract ${contractAddress}`);
+    const evolveData = response.data.data.evolveBatch;
+    console.log(`The NFTs were evolved successfully. The response includes the hash of transaction sent to chain ${chainId}:`);
+    console.log(evolveData);
   } catch (error) {
     console.error('Error making API request:', error);
   }
 }
 
-mintNFT();
+evolveNFT();

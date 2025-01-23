@@ -1,6 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 
+// Specify the LAOS endpoint (choose between testnet or mainnet)
 const LAOS_API_ENDPOINT = 'https://testnet.api.laosnetwork.io/graphql';
 const { LAOS_API_KEY } = process.env;
 if (!LAOS_API_KEY) throw new Error('Please set LAOS_API_KEY in your .env file.');
@@ -39,7 +40,7 @@ async function setup() {
     );
 
     if (response.data.errors) {
-      console.error('Error setting up collection:', response.data.errors);
+      console.error('Error:', response.data.errors);
       return;
     }
 
