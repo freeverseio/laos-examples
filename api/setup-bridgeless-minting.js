@@ -31,6 +31,7 @@ const createCollectionMutation = `
 
 async function setup() {
   try {
+    console.log('API request sent. Please wait until the setup transactions are confirmed both on the EVM chain and LAOS...');
     const response = await axios.post(
       LAOS_API_ENDPOINT,
       { query: createCollectionMutation },
@@ -41,7 +42,14 @@ async function setup() {
       console.error('Error setting up collection:', response.data.errors);
       return;
     }
-    console.log('Collection created successfully:', response.data.createCollection);
+
+    const collectionData = response.data.data.createCollection;
+    console.log('Collection created successfully. Full API response:');
+    console.log(collectionData);
+    console.log(`
+      - ERC721 deployed on the EVM chain (chaindId = ${collectionData.chainId}), managing the ownership / transfer of assets: ${collectionData.contractAddress}
+      - The ERC721 points to the following sibling collection on LAOS, to be used for NFT minting and evolution: ${collectionData.laosAddress}
+      `);
   } catch (error) {
     console.error('Error making API request:', error);
   }
