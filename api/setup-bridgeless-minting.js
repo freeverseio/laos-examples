@@ -3,13 +3,9 @@ const axios = require('axios');
 
 // Specify the LAOS endpoint (choose between testnet or mainnet)
 const LAOS_API_ENDPOINT = 'https://testnet.api.laosnetwork.io/graphql';
+
 const { LAOS_API_KEY } = process.env;
 if (!LAOS_API_KEY) throw new Error('Please set LAOS_API_KEY in your .env file.');
-
-const headers = {
-  'Content-Type': 'application/json',
-  'x-api-key': `${LAOS_API_KEY}`,
-};
 
 const createCollectionMutation = `
   mutation CreateCollection {
@@ -30,9 +26,14 @@ const createCollectionMutation = `
   }
 `;
 
+const headers = {
+  'Content-Type': 'application/json',
+  'x-api-key': `${LAOS_API_KEY}`,
+};
+
 async function setup() {
   try {
-    console.log('API request sent. Please wait until the setup transactions are confirmed both on the EVM chain and LAOS...');
+    console.log('API request sent. Please wait until the setup transactions are confirmed both on the EVM chain and LAOS. This is a one-time operation...');
     const response = await axios.post(
       LAOS_API_ENDPOINT,
       { query: createCollectionMutation },

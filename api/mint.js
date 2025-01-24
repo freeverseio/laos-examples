@@ -3,7 +3,7 @@ const axios = require('axios');
 
 // Specifify the chainID where the uERC721 is deployed, and its contractAddress:
 const chainId = 137;
-const contractAddress = '0x7eaf767be3c72d422d59be7c318161e4420c15d1';
+const contractAddress = '0x1b37032445e9bc6b13669357a0a44490e8052c9f';
 
 // Specify the LAOS endpoint (choose between testnet or mainnet)
 const LAOS_API_ENDPOINT = 'https://testnet.api.laosnetwork.io/graphql';
@@ -11,11 +11,6 @@ const LAOS_API_ENDPOINT = 'https://testnet.api.laosnetwork.io/graphql';
 // The API Key should be on the .env file
 const { LAOS_API_KEY } = process.env;
 if (!LAOS_API_KEY) throw new Error('Please set LAOS_API_KEY in your .env file.');
-
-const headers = {
-  'Content-Type': 'application/json',
-  'x-api-key': `${LAOS_API_KEY}`,
-};
 
 const mintMutation = `
   mutation MintNFT {
@@ -46,6 +41,11 @@ const mintMutation = `
     }
   }
 `;
+
+const headers = {
+  'Content-Type': 'application/json',
+  'x-api-key': `${LAOS_API_KEY}`,
+};
 
 async function mintNFT() {
   try {
