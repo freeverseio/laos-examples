@@ -28,7 +28,7 @@ async function uploadToIPFS(filePath) {
 
 async function main() {
   // Example usage for uploading an image
-  const imagePath = './imgs/weapon.jpg'; // Path to the image file
+  const imagePath = './ipfs/weapon.jpg'; // Path to the image file
   const imageHash = await uploadToIPFS(imagePath);
 
   if (imageHash) {
@@ -47,7 +47,7 @@ async function main() {
     };
 
     // Save metadata to a file
-    const metadataPath = './evm/metadata.json';
+    const metadataPath = './ipfs/metadata.json';
     fs.writeFileSync(metadataPath, JSON.stringify(metadata));
 
     // Upload metadata
