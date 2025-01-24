@@ -25,6 +25,7 @@ If using the testnet, please use [this faucet](https://testnet.apps.laosnetwork.
 Rename the `example.env` file to `.env`, and fill in the three fields:
 * The private key field must start with `0x...`, and the corresponding account must have tokens of the corresponding network. This field is required.
 * The `ipfs-uploader.js` example uses [Pinata](https://www.pinata.cloud/) to upload and store data in IPFS. Either use your Pinata API key or create a free Pinata account to get one. Paste the key and secret in the fields in the .env file. If you are minting using IPFS addresses from a different source, you need not fill in these fields.
+* The API examples require a LAOS API key. Please contact info@laosnetwork.io to obtain one.
 
 ## Install
 
