@@ -23,8 +23,9 @@ If using the testnet, please use [this faucet](https://testnet.apps.laosnetwork.
 ## Set up the `.env` file
 
 Copy the example.env file from the root into the relevant folder:
-- For API-based scripts, copy it into the api folder.
-- For EVM-based scripts, copy it into the evm folder.
+- API scripts: Copy relevant parts to a .env file in the api folder.
+- EVM scripts: Copy relevant parts to a .env file in the evm folder.
+- Utils scripts: Copy relevant parts to a .env file in the utils folder.
 
 Rename the copied file to .env, and fill in the required fields.
 * The private key field must start with `0x...`, and the corresponding account must have tokens of the corresponding network. This field is required.
