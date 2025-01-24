@@ -47,7 +47,7 @@ async function main() {
     };
 
     // Save metadata to a file
-    const metadataPath = './evm/metadata.json';
+    const metadataPath = './metadata.json';
     fs.writeFileSync(metadataPath, JSON.stringify(metadata));
 
     // Upload metadata
