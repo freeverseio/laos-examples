@@ -8,10 +8,6 @@ const contractAddress = '0x1b37032445e9bc6b13669357a0a44490e8052c9f';
 // Specify the LAOS endpoint (choose between testnet or mainnet)
 const LAOS_API_ENDPOINT = 'https://testnet.api.laosnetwork.io/graphql';
 
-// The API Key should be on the .env file
-const { LAOS_API_KEY } = process.env;
-if (!LAOS_API_KEY) throw new Error('Please set LAOS_API_KEY in your .env file.');
-
 const evolveMutation = `
   mutation EvolveNFT {
     evolveBatch(
@@ -42,6 +38,9 @@ const evolveMutation = `
   }
 `;
 
+const { LAOS_API_KEY } = process.env;
+if (!LAOS_API_KEY) throw new Error('Please set LAOS_API_KEY in your .env file.');
+
 const headers = {
   'Content-Type': 'application/json',
   'x-api-key': `${LAOS_API_KEY}`,
@@ -62,6 +61,10 @@ async function evolveNFT() {
     }
 
     const evolveData = response.data.data.evolveBatch;
+    if (!evolveData.success) {
+      console.log('Transaction failed');
+      return;
+    }
     console.log('The NFTs were evolved successfully. The response includes the hash of transaction sent to LAOS:');
     console.log(evolveData);
   } catch (error) {

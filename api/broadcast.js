@@ -8,10 +8,6 @@ const contractAddress = '0x1b37032445e9bc6b13669357a0a44490e8052c9f';
 // Specify the LAOS endpoint (choose between testnet or mainnet)
 const LAOS_API_ENDPOINT = 'https://testnet.api.laosnetwork.io/graphql';
 
-// The API Key should be on the .env file
-const { LAOS_API_KEY } = process.env;
-if (!LAOS_API_KEY) throw new Error('Please set LAOS_API_KEY in your .env file.');
-
 const broadcastMutation = `
   mutation BroadcastBatch {
     broadcastBatch(
@@ -30,6 +26,9 @@ const broadcastMutation = `
     }
   }
 `;
+
+const { LAOS_API_KEY } = process.env;
+if (!LAOS_API_KEY) throw new Error('Please set LAOS_API_KEY in your .env file.');
 
 const headers = {
   'Content-Type': 'application/json',
@@ -51,7 +50,11 @@ async function broadcastNFT() {
     }
 
     const broadcastData = response.data.data.broadcastBatch;
-    console.log(`The following NFTs were broadcast with status: ${broadcastData.success}`);
+    if (!broadcastData.success) {
+      console.log('Transaction failed');
+      return;
+    }
+    console.log('The following NFTs were broadcast:');
     console.log(broadcastData.tokenIds);
   } catch (error) {
     console.error('Error making API request:', error);
