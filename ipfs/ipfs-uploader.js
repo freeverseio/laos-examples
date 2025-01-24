@@ -28,8 +28,8 @@ async function uploadToIPFS(filePath) {
 
 async function main() {
   // Example usage for uploading an image
-  const imagePath = 'imgs/weapon.jpg'; // Path to the image file
-  const imageHash = await uploadToIPFS(imagePath); // Upload image
+  const imagePath = './ipfs/weapon.jpg'; // Path to the image file
+  const imageHash = await uploadToIPFS(imagePath);
 
   if (imageHash) {
     console.log('\n-------------');
@@ -39,7 +39,7 @@ async function main() {
     const metadata = {
       name: 'Your NFT Name',
       description: 'Description of your NFT',
-      image: `ipfs://${imageHash}`, // Link image hash in metadata
+      image: `ipfs://${imageHash}`, // Link image CID in metadata
       attributes: [
         { trait_type: 'Attr 1', value: 'Value 1' },
         { trait_type: 'Attr 2', value: 'Value 2' },
@@ -47,7 +47,7 @@ async function main() {
     };
 
     // Save metadata to a file
-    const metadataPath = 'metadata.json';
+    const metadataPath = './ipfs/metadata.json';
     fs.writeFileSync(metadataPath, JSON.stringify(metadata));
 
     // Upload metadata
