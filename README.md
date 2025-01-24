@@ -72,7 +72,7 @@ node evm/evolve.js
 node api/evolve.js
 
 # Demonstrates how to upload asset metadata to IPFS.
-node evm/ipfs-uploader.js
+node ipfs/ipfs-uploader.js
 
 #  Emits a transfer event on the EVM chain to notify marketplaces that do not yet natively integrate with LAOS.
 node evm/broadcast.js
