@@ -1,9 +1,10 @@
+/* eslint-disable no-await-in-loop */
 require('dotenv').config();
 const axios = require('axios');
 
 // Specify the chainID where the uERC721 is deployed, and its contractAddress:
 const chainId = 137;
-const contractAddress = '0x1b37032445e9bc6b13669357a0a44490e8052c9f';
+const contractAddress = '0xc3804be6b4a46a3bacf80a1578627cbd780da765';
 
 const LAOS_API_ENDPOINT = 'https://api.laosnetwork.io/v2/graphql';
 
@@ -15,14 +16,14 @@ const evolveAsyncMutation = `
         contractAddress: "${contractAddress}"
         tokens: [
           {
-            tokenId: "83834123087411776487146708352711876309124697616080602758242164335421823290997",
+            tokenId: "520463665441982649906516481606370360392698873000003692741498890886073978485",
             name: "First NFT Evolved",
             description: "First NFT Description Evolved",
             attributes: [{ trait_type: "Category", value: "Example Evolved" }],
             image: "ipfs://HASH_AA"
           },
           {
-            tokenId: "95908609784828203441863748079688753062533515066747621617011273368585779711605",
+            tokenId: "96856026251759042895449182525818246039289479624169736146446469174135404793461",
             name: "Second NFT Evolved",
             description: "Second NFT Description Evolved",
             attributes: [{ trait_type: "Category", value: "Example Evolved" }],
@@ -53,13 +54,45 @@ const headers = {
   'x-api-key': `${LAOS_API_KEY}`,
 };
 
+async function checkEvolveStatus(trackingId) {
+  try {
+    let status = 'PENDING';
+    while (status === 'PENDING') {
+      const statusResponse = await axios.post(
+        LAOS_API_ENDPOINT,
+        {
+          query: evolveResponseQuery.replace('%TRACKING_ID%', trackingId),
+        },
+        { headers },
+      );
+
+      if (statusResponse.data.errors) {
+        console.error('Error:', statusResponse.data.errors);
+        return;
+      }
+
+      status = statusResponse.data.data.evolveResponse.status;
+      console.log(`Evolving status: ${status}`);
+
+      if (status === 'PENDING') {
+        console.log('Checking again in 3 seconds...');
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      } else {
+        return;
+      }
+    }
+  } catch (error) {
+    console.error('Error checking evolve status:', error);
+  }
+}
+
 async function evolveNFT() {
   try {
-    console.log('API request sent. Please wait until the evolve transaction is confirmed on LAOS...');
+    console.log('API request sent. Transaction is being submitted to LAOS...');
     const response = await axios.post(
       LAOS_API_ENDPOINT,
       { query: evolveAsyncMutation },
-      { headers }
+      { headers },
     );
 
     if (response.data.errors) {
@@ -73,43 +106,10 @@ async function evolveNFT() {
       return;
     }
 
-    console.log('Evolve process started. Tracking ID:', evolveData.trackingId);
+    console.log('Transaction sent. Transaction hash assigned. Use this Tracking ID to query about its status:', evolveData.trackingId);
     await checkEvolveStatus(evolveData.trackingId);
-
   } catch (error) {
     console.error('Error making API request:', error);
-  }
-}
-
-async function checkEvolveStatus(trackingId) {
-  try {
-    let status = 'PENDING';
-    while (status === 'PENDING') {
-      const statusResponse = await axios.post(
-        LAOS_API_ENDPOINT,
-        {
-          query: evolveResponseQuery.replace('%TRACKING_ID%', trackingId)
-        },
-        { headers }
-      );
-
-      if (statusResponse.data.errors) {
-        console.error('Error:', statusResponse.data.errors);
-        return;
-      }
-
-      status = statusResponse.data.data.evolveResponse.status;
-      console.log(`Evolving status: ${status}`);
-
-      if (status === 'PENDING') {
-        console.log('Checking again in 3 seconds...');
-        await new Promise(resolve => setTimeout(resolve, 3000));
-      } else {
-        return;
-      }
-    }
-  } catch (error) {
-    console.error('Error checking evolve status:', error);
   }
 }
 

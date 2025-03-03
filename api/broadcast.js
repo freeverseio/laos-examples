@@ -3,19 +3,19 @@ const axios = require('axios');
 
 // Specify the chainID where the uERC721 is deployed, and its contractAddress:
 const chainId = 137;
-const contractAddress = '0x1b37032445e9bc6b13669357a0a44490e8052c9f';
+const contractAddress = '0x9f16fc5a49afa724407225e97edb8775fe4eb9fb';
 
-const LAOS_API_ENDPOINT = 'https://testnet.api.laosnetwork.io/graphql';
+const LAOS_API_ENDPOINT = 'https://api.laosnetwork.io/v2/graphql';
 
 const broadcastMutation = `
-  mutation BroadcastBatch {
-    broadcastBatch(
+  mutation Broadcast {
+    broadcast(
       input: {
         chainId: "${chainId}"
         ownershipContractAddress: "${contractAddress}"
         tokenIds: [
-          "83834123087411776487146708352711876309124697616080602758242164335421823290997",
-          "95908609784828203441863748079688753062533515066747621617011273368585779711605"
+          "66411355714187073314704920013201981051255304368864801044887078638344704552966",
+          "74995149788672080040352642669527055209321302525004511819743852700164378783750"
         ]
         type: "SELF"
       }

@@ -3,7 +3,7 @@ const axios = require('axios');
 
 // Specify the chainID where the uERC721 is deployed, and its contractAddress:
 const chainId = 137;
-const contractAddress = '0x1b37032445e9bc6b13669357a0a44490e8052c9f';
+const contractAddress = '0xc3804be6b4a46a3bacf80a1578627cbd780da765';
 
 const LAOS_API_ENDPOINT = 'https://api.laosnetwork.io/v2/graphql';
 

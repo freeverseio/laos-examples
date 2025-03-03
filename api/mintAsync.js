@@ -1,9 +1,10 @@
+/* eslint-disable no-await-in-loop */
 require('dotenv').config();
 const axios = require('axios');
 
 // Specify the chainID where the uERC721 is deployed, and its contractAddress:
 const chainId = 137;
-const contractAddress = '0x1b37032445e9bc6b13669357a0a44490e8052c9f';
+const contractAddress = '0xc3804be6b4a46a3bacf80a1578627cbd780da765';
 
 const LAOS_API_ENDPOINT = 'https://api.laosnetwork.io/v2/graphql';
 
@@ -54,13 +55,45 @@ const headers = {
   'x-api-key': `${LAOS_API_KEY}`,
 };
 
+async function checkMintStatus(trackingId) {
+  try {
+    let status = 'PENDING';
+    while (status === 'PENDING') {
+      const statusResponse = await axios.post(
+        LAOS_API_ENDPOINT,
+        {
+          query: mintResponseQuery.replace('%TRACKING_ID%', trackingId),
+        },
+        { headers },
+      );
+
+      if (statusResponse.data.errors) {
+        console.error('Error:', statusResponse.data.errors);
+        return;
+      }
+
+      status = statusResponse.data.data.mintResponse.status;
+      console.log(`Minting status: ${status}`);
+
+      if (status === 'PENDING') {
+        console.log('Checking again in 3 seconds...');
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      } else {
+        return;
+      }
+    }
+  } catch (error) {
+    console.error('Error checking mint status:', error);
+  }
+}
+
 async function mintNFT() {
   try {
-    console.log('API request sent. Please wait until the mint transaction is confirmed on LAOS...');
+    console.log('API request sent. Transaction is being submitted to LAOS...');
     const response = await axios.post(
       LAOS_API_ENDPOINT,
       { query: mintAsyncMutation },
-      { headers }
+      { headers },
     );
 
     if (response.data.errors) {
@@ -74,43 +107,11 @@ async function mintNFT() {
       return;
     }
 
-    console.log('Minting started. Tracking ID:', mintData.trackingId);
+    console.log('Transaction sent. Transaction hash assigned. Use this Tracking ID to query about its status:', mintData.trackingId);
+    console.log('The following tokenIDs are being minted: ', mintData.tokenIds);
     await checkMintStatus(mintData.trackingId);
-
   } catch (error) {
     console.error('Error making API request:', error);
-  }
-}
-
-async function checkMintStatus(trackingId) {
-  try {
-    let status = 'PENDING';
-    while (status === 'PENDING') {
-      const statusResponse = await axios.post(
-        LAOS_API_ENDPOINT,
-        {
-          query: mintResponseQuery.replace('%TRACKING_ID%', trackingId)
-        },
-        { headers }
-      );
-
-      if (statusResponse.data.errors) {
-        console.error('Error:', statusResponse.data.errors);
-        return;
-      }
-
-      status = statusResponse.data.data.mintResponse.status;
-      console.log(`Minting status: ${status}`);
-
-      if (status === 'PENDING') {
-        console.log('Checking again in 3 seconds...');
-        await new Promise(resolve => setTimeout(resolve, 3000));
-      } else {
-        return;
-      }
-    }
-  } catch (error) {
-    console.error('Error checking mint status:', error);
   }
 }
 
