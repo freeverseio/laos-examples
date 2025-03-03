@@ -1,7 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
 
-// Specify the LAOS endpoint (choose between testnet or mainnet)
 const LAOS_API_ENDPOINT = 'https://api.laosnetwork.io/v2/graphql';
 
 const createCollectionMutation = `

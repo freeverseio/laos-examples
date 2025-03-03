@@ -1,11 +1,10 @@
 require('dotenv').config();
 const axios = require('axios');
 
-// Specifify the chainID where the uERC721 is deployed, and its contractAddress:
+// Specify the chainID where the uERC721 is deployed, and its contractAddress:
 const chainId = 137;
 const contractAddress = '0x1b37032445e9bc6b13669357a0a44490e8052c9f';
 
-// Specify the LAOS endpoint (choose between testnet or mainnet)
 const LAOS_API_ENDPOINT = 'https://api.laosnetwork.io/v2/graphql';
 
 const evolveMutation = `
