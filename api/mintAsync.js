@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 require('dotenv').config();
 const axios = require('axios');
 
@@ -7,9 +8,9 @@ const contractAddress = '0xc3804be6b4a46a3bacf80a1578627cbd780da765';
 
 const LAOS_API_ENDPOINT = 'https://api.laosnetwork.io/v2/graphql';
 
-const mintMutation = `
+const mintAsyncMutation = `
   mutation MintNFT {
-    mint(
+    mintAsync(
       input: {
         chainId: "${chainId}"
         contractAddress: "${contractAddress}"
@@ -32,7 +33,16 @@ const mintMutation = `
       }
     ) {
       tokenIds
-      success
+      status
+      trackingId
+    }
+  }
+`;
+
+const mintResponseQuery = `
+  query mintNFTResponse {
+    mintResponse(trackingId: "%TRACKING_ID%") {
+      status
     }
   }
 `;
@@ -45,12 +55,44 @@ const headers = {
   'x-api-key': `${LAOS_API_KEY}`,
 };
 
+async function checkMintStatus(trackingId) {
+  try {
+    let status = 'PENDING';
+    while (status === 'PENDING') {
+      const statusResponse = await axios.post(
+        LAOS_API_ENDPOINT,
+        {
+          query: mintResponseQuery.replace('%TRACKING_ID%', trackingId),
+        },
+        { headers },
+      );
+
+      if (statusResponse.data.errors) {
+        console.error('Error:', statusResponse.data.errors);
+        return;
+      }
+
+      status = statusResponse.data.data.mintResponse.status;
+      console.log(`Minting status: ${status}`);
+
+      if (status === 'PENDING') {
+        console.log('Checking again in 3 seconds...');
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      } else {
+        return;
+      }
+    }
+  } catch (error) {
+    console.error('Error checking mint status:', error);
+  }
+}
+
 async function mintNFT() {
   try {
-    console.log('API request sent. Please wait until the mint transaction is confirmed on LAOS...');
+    console.log('API request sent. Transaction is being submitted to LAOS...');
     const response = await axios.post(
       LAOS_API_ENDPOINT,
-      { query: mintMutation },
+      { query: mintAsyncMutation },
       { headers },
     );
 
@@ -59,14 +101,15 @@ async function mintNFT() {
       return;
     }
 
-    const mintData = response.data.data.mint;
-    if (!mintData.success) {
-      console.log('Transaction failed');
+    const mintData = response.data.data.mintAsync;
+    if (!mintData.trackingId) {
+      console.log('Failed to get trackingId');
       return;
     }
-    console.log('Mint successful. New NFTs minted with these tokenIDs:');
-    console.log(mintData.tokenIds);
-    console.log(`They can be traded directly on chaind ${chainId}, contract ${contractAddress}`);
+
+    console.log('Transaction sent. Transaction hash assigned. Use this Tracking ID to query about its status:', mintData.trackingId);
+    console.log('The following tokenIDs are being minted: ', mintData.tokenIds);
+    await checkMintStatus(mintData.trackingId);
   } catch (error) {
     console.error('Error making API request:', error);
   }
