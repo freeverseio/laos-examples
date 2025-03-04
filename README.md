@@ -60,15 +60,23 @@ node evm/create-laos-collection.js
 # Deploys a uERC721 contract on the chosen EVM chain. This is the 2nd step used by 'setup-bridgeless-minting'.
 node evm/deploy721.js
 
-# Mints a single asset to an existing sibling collection on the LAOS Network.
-node evm/mint.js
+# Mints assets to an existing sibling collection on the LAOS Network...
+# ...one asset using direct EVM calls:
+node evm/mint.js # mints one asset using direct EVM calls
+# ...multiple assets using the API, via a monolithic 1-step process, where TX sending and confirmation may keep the caller waiting for several seconds
+node api/mintAsync.js
+# ...multiple assets using the API a monolithic 1-step process, where TX sending and confirmation may keep the caller waiting for several seconds
 node api/mint.js
 
 # Mints a large number of assets in batches, efficiently filling each block to maximize throughput.
 node evm/mint-in-batches.js
 
-# Evolves an asset previously minted on a sibling collection.
+# Evolves assets previously minted on a sibling collection...
+# ...one asset using direct EVM calls:
 node evm/evolve.js
+# ...multiple assets using the API, via a monolithic 1-step process, where TX sending and confirmation may keep the caller waiting for several seconds
+node api/evolveAsync.js
+# ...multiple assets using the API a monolithic 1-step process, where TX sending and confirmation may keep the caller waiting for several seconds
 node api/evolve.js
 
 # Demonstrates how to upload asset metadata to IPFS.
