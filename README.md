@@ -63,7 +63,7 @@ node evm/deploy721.js
 # Mints assets to an existing sibling collection on the LAOS Network...
 # ...one asset using direct EVM calls:
 node evm/mint.js # mints one asset using direct EVM calls
-# ...multiple assets using the API, via a monolithic 1-step process, where TX sending and confirmation may keep the caller waiting for several seconds
+# ...multiple assets using the API, using the recommended 2-step process, where a TX is sent first, and the caller later queries for confirmation
 node api/mintAsync.js
 # ...multiple assets using the API a monolithic 1-step process, where TX sending and confirmation may keep the caller waiting for several seconds
 node api/mint.js
@@ -74,7 +74,7 @@ node evm/mint-in-batches.js
 # Evolves assets previously minted on a sibling collection...
 # ...one asset using direct EVM calls:
 node evm/evolve.js
-# ...multiple assets using the API, via a monolithic 1-step process, where TX sending and confirmation may keep the caller waiting for several seconds
+# ...multiple assets using the API, using the recommended 2-step process, where a TX is sent first, and the caller later queries for confirmation
 node api/evolveAsync.js
 # ...multiple assets using the API a monolithic 1-step process, where TX sending and confirmation may keep the caller waiting for several seconds
 node api/evolve.js
