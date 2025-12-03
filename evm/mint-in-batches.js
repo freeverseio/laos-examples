@@ -40,7 +40,7 @@ const SECS_TO_WAIT = 12;
 // Public RPC nodes:
 // - LAOS Mainnet: https://rpc.laos.laosfoundation.io
 // - LAOS Sigma Testnet https://rpc.laossigma.laosfoundation.io
-const PROVIDER_URL = 'https://rpc.laossigma.laosfoundation.io';
+const PROVIDER_URL = 'https://rpc.laos.laosfoundation.io';
 
 const sleep = (seconds) => new Promise((resolve) => { setTimeout(resolve, seconds * 1000); });
 
@@ -84,6 +84,9 @@ async function main() {
   console.log('BatchMinter successfully deployed at address:', await batchMinter.getAddress());
 
   const assets = JSON.parse(fs.readFileSync(ALL_ASSETS_FILE, 'utf8'));
+
+  console.log(`Ready to mint ${assets.length} assets. Please press Enter to continue...`);
+  await new Promise(res => process.stdin.once('data', () => res()));
 
   let currentIndex = 0;
   let nonce = await provider.getTransactionCount(wallet.address);

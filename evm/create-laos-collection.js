@@ -17,7 +17,7 @@ if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 // Public RPC nodes:
 // - LAOS Mainnet: https://rpc.laos.laosfoundation.io
 // - LAOS Sigma Testnet https://rpc.laossigma.laosfoundation.io
-const PROVIDER_URL = 'https://rpc.laossigma.laosfoundation.io';
+const PROVIDER_URL = 'https://rpc.laos.laosfoundation.io';
 
 /**
  * Creates a new collection on the LAOS network.
