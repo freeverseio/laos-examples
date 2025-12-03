@@ -25,6 +25,9 @@ const fs = require('fs');
 const { PRIVATE_KEY } = process.env;
 if (!PRIVATE_KEY) throw new Error('Please set PRIVATE_KEY in your .env file.');
 
+// If you want to reuse an already deployed BatchMinter, enter its address "0x..." here:
+const BATCH_MINTER_ADDRESS = '';
+
 // Write all assets to be minted in a json file:
 const ALL_ASSETS_FILE = './assetsForBatchMinting/mint-in-batches.assets.json';
 
@@ -57,6 +60,23 @@ function randomSlotArray(n) {
   return Array.from(result);
 }
 
+async function getBatchMinterInstance(wallet) {
+  const CONTRACT_ABI_URL =
+    'https://github.com/freeverseio/laos-smart-contracts/blob/main/batch-minter/artifacts/contracts/LaosBatchMinter.sol/LaosBatchMinter.json?raw=true';
+
+  // Fetch ABI only (bytecode no longer needed)
+  const response = await axios.get(CONTRACT_ABI_URL);
+  const contractData = response.data;
+
+  // Create contract instance at existing address
+  const instance = new ethers.Contract(
+    BATCH_MINTER_ADDRESS,
+    contractData.abi,
+    wallet
+  );
+  return instance;
+}
+
 async function deployBatchMinter(wallet) {
   const CONTRACT_ABI_URL = 'https://github.com/freeverseio/laos-smart-contracts/blob/main/batch-minter/artifacts/contracts/LaosBatchMinter.sol/LaosBatchMinter.json?raw=true';
   const response = await axios.get(CONTRACT_ABI_URL);
@@ -80,8 +100,14 @@ async function main() {
   const provider = new ethers.JsonRpcProvider(PROVIDER_URL);
   const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
   console.log('Deployer address:', wallet.address);
-  const batchMinter = await deployBatchMinter(wallet);
-  console.log('BatchMinter successfully deployed at address:', await batchMinter.getAddress());
+  if (BATCH_MINTER_ADDRESS === '') {
+    const batchMinter = await deployBatchMinter(wallet);
+    console.log('BatchMinter successfully deployed at address:', await batchMinter.getAddress());
+   } else {
+    const batchMinter = await getBatchMinterInstance(wallet);
+    console.log('Using previously deployed BatchMinter at:', await batchMinter.getAddress());
+  }
+   
 
   const assets = JSON.parse(fs.readFileSync(ALL_ASSETS_FILE, 'utf8'));
 
