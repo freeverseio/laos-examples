@@ -100,13 +100,16 @@ async function main() {
   const provider = new ethers.JsonRpcProvider(PROVIDER_URL);
   const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
   console.log('Deployer address:', wallet.address);
+  let batchMinter;
   if (BATCH_MINTER_ADDRESS === '') {
-    const batchMinter = await deployBatchMinter(wallet);
+    batchMinter = await deployBatchMinter(wallet);
     console.log('BatchMinter successfully deployed at address:', await batchMinter.getAddress());
-   } else {
-    const batchMinter = await getBatchMinterInstance(wallet);
+  } else {
+     batchMinter = await getBatchMinterInstance(wallet);
     console.log('Using previously deployed BatchMinter at:', await batchMinter.getAddress());
   }
+  console.log('This BatchMinter will be used to manage the rules to mint and evolve the following precompile collection address on LAOS:', await batchMinter.precompileAddress());
+  console.log('Please use this precompile collection address as target sibling collection for BRC721/ERC721 contracts on other blockchains');
    
 
   const assets = JSON.parse(fs.readFileSync(ALL_ASSETS_FILE, 'utf8'));
