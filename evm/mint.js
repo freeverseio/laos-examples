@@ -65,7 +65,7 @@ async function main() {
     const contractABI = response.data;
 
     // Initialize Ethers provider and wallet
-    const provider = new ethers.JsonRpcProvider('https://rpc.laossigma.laosfoundation.io');
+    const provider = new ethers.JsonRpcProvider('https://rpc.laos.laosfoundation.io');
     const wallet = new ethers.Wallet(privateKey, provider);
 
     const contract = new ethers.Contract(laosCollectionAddr, contractABI, wallet);
